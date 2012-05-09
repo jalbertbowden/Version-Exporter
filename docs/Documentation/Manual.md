@@ -181,3 +181,12 @@ Tested on:
 - Mac, Intel Core 2 Duo @ 2.4GHz, 8GB, Adobe Photoshop CS4
 
 If you have successfully tested Version Exporter on you machine, please let me know the specs of it so I could bring this into the list.
+
+Contact and Support
+===================
+
+If you've found any bugs or you have any questions you can
+
+* submit an issue on [GitHub](https://github.com/amtvsn/Version-Exporter/issues)
+* contact me via e-mail github@mtvsn.ru
+* or via skype `azukari`.
