@@ -188,5 +188,5 @@ Contact and Support
 If you've found any bugs or you have any questions you can
 
 * submit an issue on [GitHub](https://github.com/amtvsn/Version-Exporter/issues)
-* contact me via e-mail github@mtvsn.ru
+* contact me via e-mail github@mtvsn.com
 * or via skype `azukari`.
