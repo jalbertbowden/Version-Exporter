@@ -6,7 +6,9 @@ What is Version Exporter
 
 Version Exporter is a JavaScript application for Adobe Photoshop with general purpose to provide a workflow to export different views or versions of a single Photoshop document.
 
-In other words Version Exporter takes every root folder (layer set) in the document and saves it as a separate image.
+Basic idea of the Version Exporter is to take every root folder (layer set) in the document and save it as a separate image.
+
+![Main Window](https://img.skitch.com/20120510-kjt5mdw4ydrsatmdbmybrehbf6.png)
 
 ### Real Life Example
 
