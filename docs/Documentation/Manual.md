@@ -149,7 +149,11 @@ All 4 parameters may have value `w` or `h` which are the place holders for the w
 Safari Wrap (draft)
 -------------------
 
-_Not documented yet_
+_Still needs to be documented_
+
+In short it wraps the image with Safari window. The resulting screen looks about 100% the same as the screenshot you would capture from original Mac OS (Lion). 
+
+The window gets adjusted to the size of the source image automatically. The screen includes shadow, rounded corners, custom window title and custom URL. If you save it as a PNG or PSD file the transparency of the shadow remains. If you choose another format, you may specify the color of the background behind the window. 
 
 
 Project Configuration
@@ -157,6 +161,7 @@ Project Configuration
 
 _Not documented yet_
 
+It's JSON.
 
 Batch Export
 ------------
