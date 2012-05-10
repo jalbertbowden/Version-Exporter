@@ -40,8 +40,20 @@ function MergeObjectsRecursive(obj1, obj2) {
 	return obj1;
 }
 
-var Url = {
 
+///////////////////////////////////////////////////////////////////////////////
+// Function: escapeString
+// Usage: replaces '\' with '\\' and '"' with '\"'. Used in ui.js
+// Input: any object, prefered a string
+// Return: escaped string
+///////////////////////////////////////////////////////////////////////////////
+function escapeString(str){
+	var str = new String(str);
+	return str.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+
+var Url = {
 	getAbsolute: function( basePath, targetPath ){
 
 		if ( !basePath ) throw(new Error('Url.getAbsolute: Invalid input'));
@@ -59,5 +71,7 @@ var Url = {
 
 		return Folder(basePath).fullName;
 	},
-
 }
+
+
+

@@ -22,52 +22,53 @@
 ///////////////////////////////////////////////////////////////////////////////
 function ui_settingsDialog(exportInfo) {
 
+	// Configure the dialog
 	var res = String(" \
 		dialog { \
 			text: '"+strTitle+"', \
 			orientation: 'column', \
 			alignChildren: 'left', \
 			grpDestination: Group { \
-				label: StaticText { text: '"+strLabelDestination+"', preferredSize: [ 140, 15 ] }, \
-				field: EditText { text: '"+ exportInfo.destination.toString() +"', preferredSize: [ 300, 20 ] }, \
-				btnBrowse: Button { text: '"+ strButtonBrowse +"', preferredSize: [ 80, 20 ] } \
+				label: StaticText { text: '"+ escapeString(strLabelDestination) +"', preferredSize: [ 140, 15 ] }, \
+				field: EditText { text: '"+ escapeString(exportInfo.destination) +"', preferredSize: [ 300, 20 ] }, \
+				btnBrowse: Button { text: '"+ escapeString(strButtonBrowse) +"', preferredSize: [ 80, 20 ] } \
 			}, \
 			grpFilenamePrefix: Group { \
 				label: StaticText { text: '"+ strLabelFileNamePrefix +"', preferredSize: [ 140, 15 ] }, \
-				field: EditText { text: '"+ exportInfo.fileNamePrefix.toString() +"', preferredSize: [ 390, 20 ] }, \
+				field: EditText { text: '"+ escapeString(exportInfo.fileNamePrefix) +"', preferredSize: [ 390, 20 ] }, \
 			}, \
 			pnlSafariWrap: Panel { \
-				text: '"+ strSafariWrap +"', \
+				text: '"+ escapeString(strSafariWrap) +"', \
 				alignment: 'fill', \
 				alignChildren: 'left', \
 				grpEnable: Group { \
-					label: StaticText { text: '"+ strEnable +"', preferredSize: [ 120, 15 ] }, \
+					label: StaticText { text: '"+ escapeString(strEnable) +"', preferredSize: [ 120, 15 ] }, \
 					field: Checkbox { text: '', value: "+ exportInfo.safariWrap +" }, \
 				}, \
 				grpWindowTitle: Group { \
-					label: StaticText { text: '"+ strWindowTitle +"', preferredSize: [ 120, 15 ] }, \
-					field: EditText { text: '"+ exportInfo.safariWrap_windowTitle.toString() +"', preferredSize: [ 370, 20 ] }, \
+					label: StaticText { text: '"+ escapeString(strWindowTitle) +"', preferredSize: [ 120, 15 ] }, \
+					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_windowTitle) +"', preferredSize: [ 370, 20 ] }, \
 				}, \
 				grpWindowURL: Group { \
-					label: StaticText { text: '"+ strWindowURL +"', preferredSize: [ 120, 15 ] }, \
-					field: EditText { text: '"+ exportInfo.safariWrap_windowURL.toString() +"', preferredSize: [ 370, 20 ] }, \
+					label: StaticText { text: '"+ escapeString(strWindowURL) +"', preferredSize: [ 120, 15 ] }, \
+					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_windowURL) +"', preferredSize: [ 370, 20 ] }, \
 				}, \
 				grpBackgroundColor: Group { \
-					label: StaticText { text: '"+ strBackgroundColor +"', preferredSize: [ 120, 15 ] }, \
-					field: EditText { text: '"+ exportInfo.safariWrap_backgroundColor.toString() +"', preferredSize: [ 370, 20 ] }, \
+					label: StaticText { text: '"+ escapeString(strBackgroundColor) +"', preferredSize: [ 120, 15 ] }, \
+					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_backgroundColor) +"', preferredSize: [ 370, 20 ] }, \
 				}, \
 			}, \
 			pnlExportSettings: Panel { \
-				text: '"+ strExportSettings +"', \
+				text: '"+ escapeString(strExportSettings) +"', \
 				alignment: 'fill', \
 				alignChildren: 'left', \
 				grpFileType: Group { \
-					label: StaticText { text: '"+ strFileType +"', preferredSize: [ 120, 15 ] }, \
+					label: StaticText { text: '"+ escapeString(strFileType) +"', preferredSize: [ 120, 15 ] }, \
 					field: DropDownList { preferredSize: [ 100, 20 ] }, \
 				}, \
 				grpIncludeICCProfile: Group { \
-					label: StaticText { text: '"+ strIncludeICCProfile +"', preferredSize: [ 120, 15 ] }, \
-					field: Checkbox { text: '', value: "+exportInfo.icc+" }, \
+					label: StaticText { text: '"+ escapeString(strIncludeICCProfile) +"', preferredSize: [ 120, 15 ] }, \
+					field: Checkbox { text: '', value: "+ exportInfo.icc +" }, \
 				}, \
 				grpOptions: Group { \
 					orientation: 'stack', \
@@ -88,11 +89,11 @@ function ui_settingsDialog(exportInfo) {
 			grpButtons: Group { \
 				orientation: 'stack', \
 				alignment: 'fill', \
-				btnHelp: Button { text: '"+strButtonHelp+"',  alignment: 'left' }, \
+				btnHelp: Button { text: '"+ escapeString(strButtonHelp) +"',  alignment: 'left' }, \
 				grpRight: Group { \
 					alignment: 'right', \
-					btnRun: Button { text: '"+strButtonRun+"', alignment: 'right', properties: { name:'ok' } }, \
-					btnCancel: Button { text: '"+strButtonCancel+"', alignment: 'right', properties: { name:'cancel' } }, \
+					btnRun: Button { text: '"+ escapeString(strButtonRun) +"', alignment: 'right', properties: { name:'ok' } }, \
+					btnCancel: Button { text: '"+ escapeString(strButtonCancel) +"', alignment: 'right', properties: { name:'cancel' } }, \
 				}, \
 			}, \
 		} \
@@ -244,4 +245,3 @@ function onBrowseButtonPress(){
 	}
 	dlgMain.defaultElement.active = true;
 }
-
