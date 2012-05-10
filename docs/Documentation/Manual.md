@@ -153,6 +153,8 @@ Safari Wrap (draft)
 
 _Still needs to be documented_
 
+![Safari Wrap](https://img.skitch.com/20120510-d439gwbxntdetkgw4fqy879xpp.png)
+
 In short it wraps the image with Safari window. The resulting screen looks about 100% the same as the screenshot you would capture from original Mac OS (Lion). 
 
 The window gets adjusted to the size of the source image automatically. The screen includes shadow, rounded corners, custom window title and custom URL. If you save it as a PNG or PSD file the transparency of the shadow remains. If you choose another format, you may specify the color of the background behind the window. 
