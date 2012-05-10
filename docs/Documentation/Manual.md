@@ -21,9 +21,9 @@ What do you do now?
 
 ### Layer Comps Approach
 
-You may create a couple Layer Comps — one for the default screen view, and one for the view with the dropdown. For this approach I see several issues, that make it impossible to with with it.
+You may create a couple Layer Comps — one for the default screen view, and one for the view with the dropdown. For this approach I see several issues, that make it impossible for me to with it.
 
-1. You have manually to update all the comps all the time while you working on it.
+1. You have to manually update all the comps all the time while you working on it.
 2. New layers won't be included in the Comp automatically.
 3. Renaming layers results into the conflicts with the comps.
 4. As you document will grow and get more options, states and views, and if you use Layer Comps, it Photoshop starts to work very slow and you get that slideshow effect even on a powerful machine.
