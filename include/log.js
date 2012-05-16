@@ -15,7 +15,11 @@
 
 var Log = {
 
+	// initial
+	_enabled: false,
+
 	notice: function (msg, e) {
+		if (LOG_LEVEL < 3) return;
 		this._log(msg, e);
 	},
 
@@ -32,18 +36,31 @@ var Log = {
 	},
 
 	enable: function() {
-		var logFile = LOG_FILE;
-		if (!logFile) return;
-		logFile = logFile.replace('{document}', origDocRef.name);
-		logFile = logFile.replace('{loglevel}', LOG_LEVEL);
-		logFile = new Date().strftime(logFile);
+		// Logging enabled?
+		if (!LOG_LEVEL) return;
+
+		// Process filename
+		var logFilePath = LOG_FILE;
+		if (!logFilePath) return;
+		logFilePath = logFilePath.replace('{document}', origDocRef.name);
+		logFilePath = logFilePath.replace('{loglevel}', LOG_LEVEL);
+		logFilePath = new Date().strftime(logFilePath);
+
+		// Folder exists?
+		var logFile = new File(logFilePath);
+		var logFolderPath = logFile.path;
+		var logFolder = new Folder(logFolderPath);
+		if (!logFolder.exists) return;
+
+		// Enable logging
 		Stdlib.log.enabled = true;
 		Stdlib.log.append = LOG_APPEND;
-		Stdlib.log.setFile(logFile);
+		Stdlib.log.setFile(logFilePath);
+		this._enabled = true;
 	},
 
 	_log: function (msg, e) {
-		if (LOG_LEVEL < 3) return;
+		if (!this._enabled) return;
 		msg = "[NOTICE] " + ( msg ? msg : '' );
 		e ? Stdlib.logException(e, msg) : Stdlib.log(msg);
 	}
