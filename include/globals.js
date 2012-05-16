@@ -25,7 +25,7 @@ var HOME					= "~/Pro Actions";
 // logging
 var LOG_FILE			= HOME + '/Version Exporter/Logs/{document}_%Y-%m-%d_%H-%M-%S.log' // {document}, {loglevel}, +strftime
 var LOG_APPEND			= false;
-var LOG_LEVEL			= 3; // 3 Notice, 2 Warning, 1 Critical error, 0 Nothing
+var LOG_LEVEL			= 3; // 3 Notice, 2 Warning, 1 Critical error, 0 Disable lgging
 
 // Gloabal Variables
 var origDocRef  = null;
