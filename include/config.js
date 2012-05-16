@@ -117,7 +117,7 @@ function config_getCurrentDocConfig(doc){
 		Log.notice("Configuration source: " + documentConfig.toSource());
 
 	} catch(e){
-		alert(e);
+		//alert(e);
 		Log.warning("Could not get configuration", e);
 		return;
 	}
