@@ -163,9 +163,277 @@ The window gets adjusted to the size of the source image automatically. The scre
 Project Configuration
 ---------------------
 
-_Not documented yet_
+Configuration file helps you reuse same settings for each specific project you are working on. It is also useful for automatic batch exporting with "No Dialog" mode turned on.
 
-It's JSON.
+Generally the configuration is a JSON data stored in a `.conf` file.
+
+The contents of the file is an array:
+
+	[]
+
+Let's insert a *docuemnt* into our *docuemnt array*:
+
+	[
+		{
+			// docuemnt
+		}
+	]
+
+Each document is an object in the JavaScript terminology. Let me show you an example:
+
+	[
+		{
+			"exportInfo": {
+				"destination": "../../Screens/Evaluation",
+			}
+		}
+	]
+
+This configuration will tell Version Exporter to export all the screens to the path `../../Screens/Evaluation` taking it relative to currently open document.
+
+You may override all these settings from the main window.
+
+Let's say you want different documents to be exported in different locations. Add the *filename* parameter:
+
+	[
+		{
+			"filename": "foo.psd",
+			"exportInfo": {
+				"destination": "../../Screens/foo",
+			}
+		},
+
+		{
+			"filename": "bar.psd",
+			"exportInfo": {
+				"destination": "../../Screens/bar",
+			}
+		}
+	]
+
+Let's add some more options:
+
+	[
+		{
+			"filename": "foo.psd",
+			"exportInfo": {
+				"destination": "../../Screens/foo",
+				"safariWrap": true,
+				"trim": true,
+			}
+		},
+
+		{
+			"filename": "bar.psd",
+			"exportInfo": {
+				"destination": "../../Screens/bar",
+				"safariWrap": true,
+				"trim": true,
+			}
+		}
+	]
+
+Next it tells to set a checkbox for *Safari Wrap*. The *trim* option tells the script to trim transparent pixels from the image before wrapping or saving it. Add some settings for *Safari Wrap*:
+
+
+	[
+		{
+			"filename": "foo.psd",
+			"exportInfo": {
+				"destination": "../../Screens/foo",
+				"safariWrap": true,
+				"trim": true,
+			},
+			"SafariWrap": {
+				"backgroundColor": "#999999",
+				"windowTitle": "Sample Project",
+				"url": "http://www.sample.com"
+			},
+		},
+
+		{
+			"filename": "bar.psd",
+			"exportInfo": {
+				"destination": "../../Screens/bar",
+				"safariWrap": true,
+				"trim": true,
+			},
+			"SafariWrap": {
+				"backgroundColor": "#999999",
+				"windowTitle": "Sample Project",
+				"url": "http://www.sample.com"
+			},
+		}
+	]
+
+So the configuration starts to grow with the number of your documents. I had some projects with configuration about 1000 lines. So I made the *extend* feature and made it contain about 200 lines. *Extend* option allows you to inherit some of the properties from another document.
+
+	[
+		{
+			"filename": "foo.psd",
+			"exportInfo": {
+				"destination": "../../Screens/foo",
+				"safariWrap": true,
+				"trim": true,
+			},
+			"SafariWrap": {
+				"backgroundColor": "#999999",
+				"windowTitle": "Sample Project",
+				"url": "http://www.sample.com"
+			},
+		},
+
+		{
+			"filename": "bar.psd",
+			"extend": "foo.psd",
+			"exportInfo": {
+				"destination": "../../Screens/bar",
+			},
+		}
+	]
+
+Notice the *destination* path is still overriding the inherited one. Good thing is that you don't need to use actual filenames of the documents:
+
+	[
+		{
+			"filename": "Base Settings",
+			"exportInfo": {
+				"safariWrap": true,
+				"trim": true,
+			},
+			"SafariWrap": {
+				"backgroundColor": "#999999",
+				"windowTitle": "Sample Project",
+				"url": "http://www.sample.com"
+			},
+		},
+		{
+			"filename": "foo.psd",
+			"extend": "Base Settings",
+			"exportInfo": {
+				"destination": "../../Screens/foo",
+			},
+		},
+		{
+			"filename": "bar.psd",
+			"extend": "Base Settings",
+			"exportInfo": {
+				"destination": "../../Screens/bar",
+			},
+		}
+	]
+
+Another good thing is that you can extend onther configuration stacks. In following example we may have several documents exported to one destination, several to another. And every group will have different Safari Wrap settings.
+
+	[
+		{
+			"filename": "Export Settings",
+			"exportInfo": {
+				"safariWrap": true,
+				"trim": true,
+			},
+			"SafariWrap": {
+				"backgroundColor": "#999999",
+			},
+		},
+		{
+			"filename": "Company Pages",
+			"extend": "Export Settings",
+			"exportInfo": {
+				"destination": "../../Screens/Company",
+			},
+			"SafariWrap": {
+				"windowTitle": "Company",
+				"url": "http://www.sample.com/company/"
+			},
+		},
+		{
+			"filename": "Blog Pages",
+			"extend": "Export Settings",
+			"exportInfo": {
+				"destination": "../../Screens/Blog",
+			},
+			"SafariWrap": {
+				"windowTitle": "Blog",
+				"url": "http://www.sample.com/blog/"
+			},
+		},
+		{ "filename": "company1.psd", 		"extend": "Company Pages" },
+		{ "filename": "company_news.psd",	"extend": "Company Pages" },
+		{ "filename": "blog_list.psd",		"extend": "Blog Pages" },
+		{ "filename": "blog_details.psd",	"extend": "Blog Pages" },
+		{ "filename": "blog_account.psd",	"extend": "Blog Pages" },
+	]
+
+So where to store the configuration? You have to options. 
+
+1. You create a single configuration file, name it `Project.conf` and place in the same folder as your PSDs are in.
+2. You go centeralized way.
+
+The centeralized way is useful when you have your PSDs in different folders as the `Project.conf` works only for the very exectly same folder, there is no recursive traversing down the folder tree. So you have to do the following:
+
+1. Go to your home folder, which is `C:\Users\user.name` on Windows 7 and `/Users/user.name` on Mac
+2. Create a folder `Pro Actions`
+3. Inside `Pro Actions` create file `Projects.conf`
+4. Inside `Pro Actions` create folder `Projects`
+
+Now the  `Projects.conf` file is the index of you projects. and the folder `Projects` contains the configuration files for each project.
+
+Here is an example of contents of the `Projects.conf`:
+
+	[
+		{
+			"project": "Sample Project",
+			"locations": [ "~/Work/Projects/Sample Projects" ]
+		},
+		{
+			"project": "Demo",
+			"locations": [ "C:/Photoshop/Sample Projects" ]
+		},
+	]
+
+So this is pretty much the same story as before. We have an array of the projects.
+
+The *project* option defines the *file name* of the configurations file in the `Projects` folder.
+
+The *locations* option defines the array of the locations containing the documents for this project. Notice that you can enter locations in any way you like. The *~* symbol is treated as user home. Here are some valid paths: `/C/path/to/files`, `/Users/path/to/files`, `~/Working/Blog/something/`, `d:/PATH/to/FILES`. Path has to be absolute and be careful with the `\` character. It is an escape character in JavaScript, so either use `\\` or `/` even for windows paths. On Mac computers also matters the case of the letters.
+
+It works like this. The script checks if the currently open document in one of the listed locations. We check all of them. The first match will stop the search. We check the name of the project which contains the matching location. Let's say it's *Sample Project*. So now we take the `Sample Project.conf` from the `Projects` folder and use it as we'd use the `Project.conf` file in the folder containing the document.
+
+So here is a live example. Say, you work on a mac, and on a PC. You have you project on Mac and mounted a shared folder onto you `D:` drive. So you have the identical contents of the 2 folders.
+
+**`/Users/me/Work/Projects/Sample Project/PSD`**
+**`D:\Projects\Sample Project\PSD`**
+
+	foo.psd
+	bar.psd
+
+**`/Users/me/Projects.conf`** (Mac) <br>
+**`C:\Users\me\Projects.conf`** (Windows)
+
+	[
+		{
+			"project": "Sample Project",
+			"locations": [
+				"~/Work/Projects/Sample Project/PSD",
+				"d:/Projects/Sample Project/PSD",
+			]
+		}
+	]
+
+**`/Users/me/Projects/Sample Project.conf`** (Mac) <br>
+**`C:\Users\me\Projects\Sample Project.conf`** (Windows)
+
+	[
+		{
+			"exportInfo": {
+				"destination": "../Screens",
+			}
+		}
+	]
+
+So if you run Version Exporter it will have your `foo.psd` and `bar.psd` exported into `/Users/me/Work/Projects/Sample Project/Screens` on Mac and `D:\Projects\Sample Project\Screens` on Windows.
+
 
 Batch Export
 ------------
