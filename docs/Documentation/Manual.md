@@ -402,15 +402,15 @@ It works like this. The script checks if the currently open document in one of t
 
 So here is a live example. Say, you work on a mac, and on a PC. You have you project on Mac and mounted a shared folder onto you `D:` drive. So you have the identical contents of the 2 folders.
 
-**`/Users/me/Work/Projects/Sample Project/PSD`**
-**`D:\Projects\Sample Project\PSD`**
-
+	/Users/me/Work/Projects/Sample Project/PSD (Mac)
+	D:\Projects\Sample Project\PSD (Windows)
+	
 	foo.psd
 	bar.psd
 
-**`/Users/me/Projects.conf`** (Mac) <br>
-**`C:\Users\me\Projects.conf`** (Windows)
-
+	/Users/me/Projects.conf (Mac)
+	C:\Users\me\Projects.conf (Windows)
+	
 	[
 		{
 			"project": "Sample Project",
@@ -421,8 +421,8 @@ So here is a live example. Say, you work on a mac, and on a PC. You have you pro
 		}
 	]
 
-**`/Users/me/Projects/Sample Project.conf`** (Mac) <br>
-**`C:\Users\me\Projects\Sample Project.conf`** (Windows)
+	/Users/me/Projects/Sample Project.conf (Mac)
+	C:\Users\me\Projects\Sample Project.conf (Windows)
 
 	[
 		{
