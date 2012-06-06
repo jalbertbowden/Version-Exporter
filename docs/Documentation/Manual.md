@@ -365,7 +365,31 @@ Another good thing is that you can extend onther configuration stacks. In follow
 		{ "filename": "blog_account.psd",	"extend": "Blog Pages" },
 	]
 
-So where to store the configuration? You have to options. 
+If you want to extend a default configuration, you should name the default one `default` and set the `extend` option in the extending settings to `default` as well. The `default` value is a keyword for setting `filename`. It tells the script to use this configuration for all files it couldn't find specific settings for. Here is a file turning off Safari Wrap for a particular file:
+
+	[
+		{
+			"filename": "default",
+			"exportInfo": {
+				"safariWrap": true,
+				"trim": true,
+			},
+			"SafariWrap": {
+				"backgroundColor": "#999999",
+			},
+		},
+		{
+			"filename": "iPad.psd",
+			"extend": "default",
+			"exportInfo": {
+				"safariWrap": false,
+			},
+		}
+
+	]
+
+
+So where to store the configuration? You have two options. 
 
 1. You create a single configuration file, name it `Project.conf` and place in the same folder as your PSDs are in.
 2. You go centeralized way.
