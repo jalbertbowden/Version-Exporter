@@ -3,9 +3,9 @@
  * Copyright (c) 2011 Artem Matevosyan
  * ------------------------------------------------------------
  *
- * @version $Revision: 196 $:
+ * @version $Revision: 216 $:
  * @author  $Author: mart $:
- * @date    $Date: 2012-03-16 18:57:05 +0100 (Fr, 16 Mrz 2012) $:
+ * @date    $Date: 2012-07-02 20:09:11 +0200 (Mo, 02 Jul 2012) $:
  */
 
 
@@ -157,8 +157,11 @@ function processSmartLayerSet( layerSet ) {
  					var bounds = params.split(",", 4); // expect 4 params
  					// Replace variables
  					for (var i = 0; i < bounds.length; i++) {
- 						if (bounds[i] == 'w') bounds[i] = getUnitValue(docRef.width);
- 						if (bounds[i] == 'h') bounds[i] = getUnitValue(docRef.height);
+ 						var d = String(bounds[i]);
+ 						d = d.replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // trim
+ 						if (d == 'w') d = getUnitValue(docRef.width);
+ 						if (d == 'h') d = getUnitValue(docRef.height);
+ 						bounds[i] = d;
  					}
 
  					// Crop
