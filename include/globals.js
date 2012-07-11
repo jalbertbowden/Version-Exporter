@@ -103,6 +103,7 @@ var strCheckboxPNGInterlaced = "Interlaced"
 var strCheckboxPNGTrm = "Trim Layers"
 var strPNGOptions = "PNG Options:"
 
+var strLabelExportSelected = "Export Selected";
 var strCheckboxSafariWrap = "Make Safari Screenshot";
 var strEnable = "Enable";
 var strSafariWrap = "Safari Wrap";

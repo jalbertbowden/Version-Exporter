@@ -22,6 +22,8 @@
 //@include 'include/ui.js'
 //@include 'include/div.js'
 //@include 'include/log.js'
+//@include 'include/getSelectedLayers.js'
+
 
 //@include 'include/safariwrap.js'
 
@@ -114,6 +116,7 @@ function main_init(exportInfo) {
 
 	exportInfo.destination = new String("");
 	exportInfo.fileNamePrefix = new String("untitled_");
+	exportInfo.exportSelected = false;
 	exportInfo.safariWrap = false;
 	exportInfo.safariWrap_windowTitle = 'Website.com';
 	exportInfo.safariWrap_windowURL = 'http://www.website.com';
@@ -137,7 +140,7 @@ function main_init(exportInfo) {
 		descriptorToObject(exportInfo, d, strMessage, postProcessExportInfo);
 	} catch(e) {} // it's ok if we don't have any options, continue with defaults
 
-	// see if I am getting descriptor parameters
+	// See if I am getting descriptor parameters
 	descriptorToObject(exportInfo, app.playbackParameters, strMessage, postProcessExportInfo);
 
 	// Set default destination and filename prefix

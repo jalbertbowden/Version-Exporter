@@ -25,6 +25,9 @@ function process_main() {
 	// Work with duplicate
 	docRef = origDocRef.duplicate();
 
+	// Get selected Layers
+	var selectedLayers = getSelectedLayers();
+
 	// Put all root layers in layerSets and name them accordingly
 	groupRootLayers();
 
@@ -48,7 +51,7 @@ function process_main() {
 	// Save initial state
 	Stdlib.takeSnapshot(docRef);
 
-	// Sycle through the layerSets
+	// Cycle through the layerSets
 	for (var i = 0; i < docRef.layerSets.length; i++ ){
 
 		// Define current layerSet
@@ -73,10 +76,28 @@ function process_main() {
 
 			// Process SmartLayerSet
 			case SMARTSETCOLOR:
+
+				// Filter if Export Selected is enabled
+				if (exportInfo.exportSelected && selectedLayers) {
+					if ( selectedLayers.indexOf(currentLayerSet) < 0 )  {
+						versionNumber++;
+						currentLayerSet.visible = false;
+						break;
+					}
+				}
+
 				// Process the SmartLayerSet
 				processSmartLayerSet(currentLayerSet);
 				// For SmartLayerSets hide the background
 				if ( backgroundLayerSet ) backgroundLayerSet.visible = false;
+
+				// Trim document
+				try {
+					if (exportInfo.trim) {
+						docRef.trim(TrimType.TRANSPARENT);
+					}
+				} catch(e) {}
+
 				// Export version
 				export_version(currentLayerSet.name);
 				// Revert is needed after actions, trimming and stuff
@@ -89,6 +110,15 @@ function process_main() {
 
 			// Regular layerSet
 			default:
+
+				// Filter if Export Selected is enabled
+				if (exportInfo.exportSelected && selectedLayers) {
+					if ( selectedLayers.indexOf(currentLayerSet) < 0 )  {
+						versionNumber++;
+						currentLayerSet.visible = false;
+						break;
+					}
+				}
 
 				// Trim document
 				try {

@@ -37,6 +37,10 @@ function ui_settingsDialog(exportInfo) {
 				label: StaticText { text: '"+ strLabelFileNamePrefix +"', preferredSize: [ 140, 15 ] }, \
 				field: EditText { text: '"+ escapeString(exportInfo.fileNamePrefix) +"', preferredSize: [ 390, 20 ] }, \
 			}, \
+			grpExportSelected: Group { \
+				label: StaticText { text: '"+ strLabelExportSelected +"', preferredSize: [ 140, 15 ] }, \
+				field: Checkbox { text: '', value: "+ exportInfo.exportSelected +" }, \
+			}, \
 			pnlSafariWrap: Panel { \
 				text: '"+ escapeString(strSafariWrap) +"', \
 				alignment: 'fill', \
@@ -121,7 +125,6 @@ function ui_settingsDialog(exportInfo) {
 	dlgMain.grpButtons.grpRight.btnCancel.onClick   = onCancelButtonPress;
 	dlgMain.grpButtons.btnHelp.onClick              = onHelpButtonPress;
 
-
 	// Open Window
 	app.bringToFront();
 
@@ -137,6 +140,7 @@ function ui_settingsDialog(exportInfo) {
 	// Get settings from dialog
 	exportInfo.destination                  = dlgMain.grpDestination.field.text;
 	exportInfo.fileNamePrefix               = dlgMain.grpFilenamePrefix.field.text;
+	exportInfo.exportSelected               = dlgMain.grpExportSelected.field.value;
 
 	exportInfo.safariWrap                   = dlgMain.pnlSafariWrap.grpEnable.field.value;
 	exportInfo.safariWrap_windowTitle       = dlgMain.pnlSafariWrap.grpWindowTitle.field.text;
