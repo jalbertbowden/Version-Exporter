@@ -41,6 +41,10 @@ function ui_settingsDialog(exportInfo) {
 				label: StaticText { text: '"+ strLabelExportSelected +"', preferredSize: [ 140, 15 ] }, \
 				field: Checkbox { text: '', value: "+ exportInfo.exportSelected +" }, \
 			}, \
+			grpTrim: Group { \
+				label: StaticText { text: '"+ strLabelTrim +"', preferredSize: [ 140, 15 ] }, \
+				field: Checkbox { text: '', value: "+ exportInfo.trim +" }, \
+			}, \
 			pnlSafariWrap: Panel { \
 				text: '"+ escapeString(strSafariWrap) +"', \
 				alignment: 'fill', \
@@ -141,6 +145,7 @@ function ui_settingsDialog(exportInfo) {
 	exportInfo.destination                  = dlgMain.grpDestination.field.text;
 	exportInfo.fileNamePrefix               = dlgMain.grpFilenamePrefix.field.text;
 	exportInfo.exportSelected               = dlgMain.grpExportSelected.field.value;
+	exportInfo.trim                         = dlgMain.grpTrim.field.value;
 
 	exportInfo.safariWrap                   = dlgMain.pnlSafariWrap.grpEnable.field.value;
 	exportInfo.safariWrap_windowTitle       = dlgMain.pnlSafariWrap.grpWindowTitle.field.text;
