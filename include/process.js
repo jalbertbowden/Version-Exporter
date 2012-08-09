@@ -184,15 +184,21 @@ function processSmartLayerSet( layerSet ) {
  				// Crop Action Layer
  				case "crop":
 
- 					var bounds = params.split(",", 4); // expect 4 params
- 					// Replace variables
- 					for (var i = 0; i < bounds.length; i++) {
- 						var d = String(bounds[i]);
- 						d = d.replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // trim
- 						if (d == 'w') d = getUnitValue(docRef.width);
- 						if (d == 'h') d = getUnitValue(docRef.height);
- 						bounds[i] = d;
+ 					if (params == "area") {
+ 						var bounds = Stdlib.getLayerBounds(docRef, currentLayer);
+ 						currentLayer.visible = false;
+ 					} else {
+	 					var bounds = params.split(",", 4); // expect 4 params
+	 					// Replace variables
+	 					for (var i = 0; i < bounds.length; i++) {
+	 						var d = String(bounds[i]);
+	 						d = d.replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // trim
+	 						if (d == 'w') d = getUnitValue(docRef.width);
+	 						if (d == 'h') d = getUnitValue(docRef.height);
+	 						bounds[i] = d;
+	 					}
  					}
+
 
  					// Crop
  					Stdlib.cropBounds(docRef, bounds);
