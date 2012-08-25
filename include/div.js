@@ -42,6 +42,34 @@ function MergeObjectsRecursive(obj1, obj2) {
 
 
 ///////////////////////////////////////////////////////////////////////////////
+// Function: getLayerByPath
+// Usage:
+// Input: container Document object, Path string, e.g. "Layerset name / Set name/Layer"
+// Return: artLayer object
+///////////////////////////////////////////////////////////////////////////////
+function getLayerByPath( doc, path ){
+	var target = doc;
+	var layerPath = String(path).split(/\/|\\/);
+	for ( var i = 0; i < layerPath.length; i++ ) {
+		var pathSegment = layerPath[i].trim();
+		try {
+			target = target.layerSets.getByName(pathSegment);
+		} catch(e){
+			// Layerset was not found, look for a layer
+			try {
+				target = target.artLayers.getByName(pathSegment);
+				break;
+			} catch (e) {
+				Log.warning('Layer or layer set reference was not found by path:' + path);
+				return undefined;
+			}
+		}
+	}
+	return target;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
 // Function: escapeString
 // Usage: replaces '\' with '\\' and '"' with '\"'. Used in ui.js
 // Input: any object, prefered a string
