@@ -157,7 +157,7 @@ function processLayers() {
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Function:
+// Function:	processSmartLayerSet
 // Usage:
 // Input:		none
 // Return:		none
@@ -167,88 +167,86 @@ function processSmartLayerSet( layerSet ) {
 	// if no layers inside, remove it
 	if ( layerSet.artLayers.length <= 0 ) {
 		layerSet.remove();
+		return;
 	}
 
-	do { // while ( layerSet.artLayers.length );
+	var docRef = layerSet.parent;
 
-		var currentLayer = layerSet.artLayers[0];
+	// Cache initial set of layers in the Smart Layer Set
+	var layers = [];
+	var length = layerSet.artLayers.length;
+	for ( var i=0; i<length; i++ ) {
+		layers.push(layerSet.artLayers[i]);
+	}
 
- 		var layerPath = currentLayer.name.split("/");
+	// Go through the Reference and Action Layers
+	for ( var i=0; i<layers.length; i++ ) {
 
- 		// Action layer
+		var currentLayer = layers[i];
  		var layerColor = getLayerColor(currentLayer);
+
+		// Action Layer
  		if (layerColor == ACTIONLAYERCOLOR) {
+ 			processCommand(currentLayer.name);
 
- 			var command = currentLayer.name;
- 			var commandSplit = command.split(" ");
-
- 			var action = commandSplit[0];
- 			action = action.replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // trim
-
- 			var params = commandSplit[1];
- 			params = params.replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // trim
-
- 			switch (action) {
-
- 				// Crop Action Layer
- 				case "crop":
-
- 					if (params == "area") {
- 						var bounds = Stdlib.getLayerBounds(docRef, currentLayer);
- 						currentLayer.visible = false;
- 					} else {
-	 					var bounds = params.split(",", 4); // expect 4 params
-	 					// Replace variables
-	 					for (var i = 0; i < bounds.length; i++) {
-	 						var d = String(bounds[i]);
-	 						d = d.replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // trim
-	 						if (d == 'w') d = getUnitValue(docRef.width);
-	 						if (d == 'h') d = getUnitValue(docRef.height);
-	 						bounds[i] = d;
-	 					}
- 					}
-
-
- 					// Crop
- 					Stdlib.cropBounds(docRef, bounds);
- 					break;
-
- 				// Unrecognized
- 				default:
- 					Log.warning('Action layer was not recognized: ' + command);
- 					break;
- 			}
-
-			// Remove Action latyer and move to the next
-			currentLayer.remove();
-			continue;
- 		}
-
-		try {
-
-			// Variables
-			var referenceLayerSet = null;
-			var container = docRef;
-
-			// Sycle through the path segments
-			for ( var i = 0; i < layerPath.length; i++ ) {
-				var pathSegment = layerPath[i].trim();
-				//alert(layerPath + '++' + pathSegment)
-				container = container.layerSets.getByName(pathSegment);
-			}
-
-			// We got to this point without an error, so we found the reference layer set
-			referenceLayerSet = container;
-			referenceLayerSet.duplicate( currentLayer, ElementPlacement.PLACEAFTER );
-
-		} catch(e) {
-			// log('layer '+currentLayer.name+' wasnt found')
+		// Reference Layer
+ 		} else {
+	 		var path = currentLayer.name;
+	 		var layer = getLayerByPath(docRef, path);
+			layer.duplicate( currentLayer, ElementPlacement.PLACEAFTER );
 		}
 
 		// Remove place holder layer
 		currentLayer.remove();
 
-	} while ( layerSet.artLayers.length );
+	}
+
+
+	function processCommand(command){
+
+		command = String(command); // cut off first "@" symbol
+		var action = command.split(/\s+/).shift();
+		var params = command.substring(action.length).trim();
+
+		switch (action) {
+
+			// Faltten Image
+			case "flatten":
+				docRef.flatten();
+				break;
+
+			// Crop
+			case "crop":
+
+				// crop by layer
+				if (params.startsWith('area')) {
+					var bounds = Stdlib.getLayerBounds(docRef, currentLayer);
+					currentLayer.visible = false;
+				// crop by bounds
+				} else {
+					var bounds = params.split(",", 4); // expect 4 params
+					// Replace variables
+					for (var i = 0; i < bounds.length; i++) {
+						var d = String(bounds[i]).trim();
+						if (d == 'w') d = getUnitValue(docRef.width);
+						if (d == 'h') d = getUnitValue(docRef.height);
+						bounds[i] = d;
+					}
+				}
+
+				// Do crop
+				//docRef.flatten();
+				Stdlib.cropBounds(docRef, bounds);
+				break;
+
+			// Unrecognized
+			default:
+				Log.warning('Action was not recognized: ' + command);
+				break;
+		}
+	}
+
+
 }
 
 

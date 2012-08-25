@@ -54,6 +54,16 @@ function processComps() {
 		// Apply each comp
 		currentComp.apply();
 
+		// Process commands
+		if (currentComp.comment) {
+			var comment = String(currentComp.comment);
+			var lines = comment.split(/\r|\n/);
+			for (var j=0; j<lines.length; j++) {
+				var line = lines[j];
+				line.startsWith('@') ? processCommand(line) : '';
+			}
+		}
+
 		// Trim document
 		try {
 			if (exportInfo.trim) {
@@ -72,5 +82,62 @@ function processComps() {
 	docRef.close(SaveOptions.DONOTSAVECHANGES);
 
 	main_finish();
+
+
+	function processCommand(command) {
+
+		command = String(command).substring(1); // cut off first "@" symbol
+		var action = command.split(/\s+/).shift();
+		var params = command.substring(action.length).trim();
+
+		switch (action) {
+
+			// Faltten Image
+			case "flatten":
+				docRef.flatten();
+				break;
+
+			// Crop
+			case "crop":
+
+				// crop by layer
+				if (params.startsWith('area')) {
+
+					// Get the target layer bounds
+					params = params.replace(/^area\s+/, '').trim();
+					var cropLayer = getLayerByPath(docRef, params); // might also be a LayerSet
+					if (cropLayer == undefined) break;
+					// getLayerBounds makes layer active and therefore visible, so we backup the visible state
+					var visibleState = cropLayer.visible;
+					// Get layer bounds
+					var bounds = Stdlib.getLayerBounds(docRef, cropLayer);
+					// Restore visible state
+					cropLayer.visible = visibleState;
+
+				// Crop by bounds
+				} else {
+					var bounds = params.split(",", 4); // expect 4 params
+					// Replace variables
+					for (var i = 0; i < bounds.length; i++) {
+						var d = String(bounds[i]).trim();
+						if (d == 'w') d = getUnitValue(docRef.width);
+						if (d == 'h') d = getUnitValue(docRef.height);
+						bounds[i] = d;
+					}
+				}
+
+				// Do crop
+				docRef.flatten();
+				Stdlib.cropBounds(docRef, bounds);
+				break;
+
+			// Unrecognized
+			default:
+				Log.warning('Action was not recognized: ' + command);
+				break;
+		}
+	}
+
+
 }
 
