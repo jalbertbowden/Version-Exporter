@@ -1,16 +1,14 @@
 Version Exporter Documentation
 ==============================
 
-What is Version Exporter
-------------------------
-
 Version Exporter is a JavaScript application for Adobe Photoshop with general purpose to provide a workflow for exporting different views or versions of a single Photoshop document.
 
 It is an advanced version of familiar 'Layers to Files' and 'Comps to Files' scripts from the original Photoshop package.
 
 ![Main Window](https://img.skitch.com/20120510-kjt5mdw4ydrsatmdbmybrehbf6.png)
 
-### Real Life Example
+Real Life Example
+-----------------
 
 First let's take a real life example without Version Exporter. Say, you design a website and you want to show a dropdown in the main navigation on a separate screen, as otherwise it covers the important content on the page. So you design the website and put the layers in some folders and here is what your document structure would normally look like.
 
@@ -21,14 +19,16 @@ First let's take a real life example without Version Exporter. Say, you design a
 
 What do you do now?
 
-### Manual Approach
+Manual Approach
+---------------
 
 1. You turn off (hide) the Menu Dropdown folder.
 2. Press "Save As" or "Save for Web" key shortcut.
 3. Choose the destination and filename, omitting that you need to think what is the current screen, figure out how to call or describe it.
 4. Multiply this by the number of screens and by the number of editions.
 
-### Version Exporter Approach
+Version Exporter Approach
+-------------------------
 
 You may create a couple Layer Comps — one for the default screen view, and one for the view with the dropdown. 
 
@@ -43,7 +43,8 @@ In both cases that the workflow looks like follows:
 
 There are several features that make Version Exporter irreplaceable must-have tool for every designer.
 
-### Features
+Features
+--------
 
 - Saves and names images automatically
 - Allows to export to several images formats
@@ -54,13 +55,13 @@ There are several features that make Version Exporter irreplaceable must-have to
 
 
 Installation
-------------
+============
 
 Place the Version Exporter folder anywhere you want in the system.
 
 
 Running Version Exporter
-------------------------
+========================
 
 To run Version Exporter
 
@@ -71,8 +72,16 @@ To run Version Exporter
 
 You might also want to record an action for that and provide it with a shortcut key for a fast access.
 
+Document Setup: Layer Comps Approach *(draft)*
+====================================
 
-Basic Export (draft)
+_Still needs to be documented_
+
+
+Document Setup: Layer Set Approach
+==================================
+
+Basic Export *(draft)*
 --------------------
 
 ![Basic Functionality](https://img.skitch.com/20120509-pqqpgs9555781b4kuiwf1b1pup.png)
@@ -96,7 +105,7 @@ Ignoring folders will affect the numbering of the files. The number of the file 
 
 ![Disabled Folder](https://img.skitch.com/20120509-ch76efrk71856knq17hc1ktrdm.png)
 
-Smart Folders (unfinished)
+Smart Folders *(draft)*
 ------------
 
 Smart Folders allow you to combine different folders and export it as a separate version. Smart Folders are exported without the Background folder. This can be useful if:
@@ -142,9 +151,13 @@ All 4 parameters may have value `w` or `h` which are the place holders for the w
 
 	crop 0,0,w,1000 
 
+You may also create an action layer and fill a certain area in it with a plain color. The color doesn't matter. Document will be cropped to the filled area. This layer can stay hidden all the time, and has to be named as follows:
 
-Safari Wrap (draft)
--------------------
+	crop area
+
+
+Safari Wrap *(draft)*
+===================
 
 _Still needs to be documented_
 
@@ -156,7 +169,7 @@ The window gets adjusted to the size of the source image automatically. The scre
 
 
 Project Configuration
----------------------
+=====================
 
 Configuration file helps you reuse same settings for each specific project you are working on. It is also useful for automatic batch exporting with "No Dialog" mode turned on.
 
@@ -455,7 +468,7 @@ So if you run Version Exporter it will have your `foo.psd` and `bar.psd` exporte
 
 
 Batch Export
-------------
+============
 
 Version Exporter identifies the dialog free mode automatically if you run it in batch processing mode. Just use `File → Automate → Batch…` as usual and keep in mind that Version Exporter will look for settings in the following order:
 
@@ -464,9 +477,11 @@ Version Exporter identifies the dialog free mode automatically if you run it in 
 3. Default settings
 
 System Requirements
--------------------
+===================
 
 Mac or PC and Adobe Photoshop CS4 or higher.
+
+Safari Wrap works only on CS4 for now. I'm working on that.
 
 Tested on:
 
