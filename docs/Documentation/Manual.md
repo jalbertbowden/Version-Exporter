@@ -6,7 +6,7 @@ What is Version Exporter
 
 Version Exporter is a JavaScript application for Adobe Photoshop with general purpose to provide a workflow for exporting different views or versions of a single Photoshop document.
 
-Basic idea of the Version Exporter is to take every root folder (layer set) in the document and save it as a separate image.
+It is an advanced version of familiar 'Layers to Files' and 'Comps to Files' scripts from the original Photoshop package.
 
 ![Main Window](https://img.skitch.com/20120510-kjt5mdw4ydrsatmdbmybrehbf6.png)
 
@@ -21,41 +21,36 @@ First let's take a real life example without Version Exporter. Say, you design a
 
 What do you do now?
 
-### Layer Comps Approach
-
-You may create a couple Layer Comps — one for the default screen view, and one for the view with the dropdown. For this approach I see several issues, that make it impossible for me to with it.
-
-1. You have to manually update all the comps all the time while you working on it.
-2. New layers won't be included in the Comp automatically.
-3. Renaming layers results into the conflicts with the comps.
-4. As your document grows and gets more options, states and views, which results into the growing number of layers, you start to experience Photoshop performance issues and you get that slideshow effect even on a powerful machine.
-
 ### Manual Approach
 
 1. You turn off (hide) the Menu Dropdown folder.
 2. Press "Save As" or "Save for Web" key shortcut.
 3. Choose the destination and filename, omitting that you need to think what is the current screen, figure out how to call or describe it.
-4. Multiply this by the number of screen and by the number of editions
+4. Multiply this by the number of screens and by the number of editions.
 
 ### Version Exporter Approach
 
-Not taking into account all the additional features and the lack of all the issues of the Layer Comps approach, it is almost the same. You should just store all versions in separate folders and make a folder for the basis for all versions. After that the workflow looks like this:
+You may create a couple Layer Comps — one for the default screen view, and one for the view with the dropdown. 
+
+*or*
+
+You keep the *overlays* and the basis common for all versions in different layer sets (or folders).
+
+In both cases that the workflow looks like follows:
 
 1. Press a hot key to call the action, press Run
 2. Done.
 
-So let's adjust the document structure for the Version Exporter.
+There are several features that make Version Exporter irreplaceable must-have tool for every designer.
 
-- Default View _(empty folder)_
-- Menu Dropdown _(contains all the layers for dropdown overlay)_
-- Background _(contains Menu, Content and Background folders)_
+### Features
 
-As result you get
-
-- website\_0000_Default View.jpg Containing the merged Background, Content and Menu folders.
-- website\_0001_Menu Dropdown Containing the merged Background, Content and Menu folders and the Menu Drodown on top of it.
-
-Of course the destination and images format are adjustable in the dialog. All the settings and destinations are taken from the last usage or from a project configuration.
+- Saves and names images automatically
+- Allows to export to several images formats
+- Wraps screens in Safari window completely adjustable including transparent background and window shadow
+- Manages different dimensions for each version of a single document
+- Allows to setup settings for large multi-document projects
+- Remembers settings for each particular document
 
 
 Installation
