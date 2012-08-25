@@ -20,6 +20,7 @@ var DISABLEDSETCOLOR                    = "gray";
 var ACTIONLAYERCOLOR                    = "blue";
 var BACKGROUNDLAYERSETNAME              = "Background";
 var SCRIPT_REGISTRY_ID                  = "yasoNEijdaP74gRLAeNpUiTr6m"
+var INSTRUCTIONS_SPLIT_TOKEN            = "### VERSION EXPORTER DATA ###";
 var HOME                                = "~/Pro Actions";
 
 // logging
@@ -46,6 +47,10 @@ var tiffIndex                           = 5;
 var pngIndex                            = 6;
 
 var fileTypes                           = [ 'JPG', 'PNG', 'PSD', 'TIFF' ];
+
+var strLabelLayerSets  			        = "Use Layer Sets as versions";
+var strLabelComps			            = "Use Comps as versions";
+var operationModes						= [ strLabelLayerSets, strLabelComps ];
 
 // the drop down list indexes for tiff compression
 var compNoneIndex                       = 0;
@@ -92,7 +97,7 @@ var strAlertDocumentMustBeOpened        = "You must have a document open to expo
 var strAlertNeedMultipleLayers          = "You need a document with multiple layers to export!"
 var strAlertWasSuccessful               = " was successful."
 var strUnexpectedError                  = "Unexpected error"
-var strMessage                          = "Export Layers To Files action settings"
+var strMessage                          = "Version Exporter Settings"
 var stretQuality                        = localize( "$$$/locale_specific/JavaScripts/ExportLayersToFiles/ETQualityLength=30" );
 var stretDestination                    = localize( "$$$/locale_specific/JavaScripts/ExportLayersToFiles/ETDestinationLength=160" );
 var strddFileType                       = localize( "$$$/locale_specific/JavaScripts/ExportLayersToFiles/DDFileType=100" );
@@ -103,6 +108,7 @@ var strCheckboxPNGInterlaced            = "Interlaced"
 var strCheckboxPNGTrm                   = "Trim Layers"
 var strPNGOptions                       = "PNG Options:"
 
+var strLabelMode  			            = "Operation Mode";
 var strLabelExportSelected              = "Export Selected";
 var strLabelTrim                        = "Trim Transparency";
 var strCheckboxSafariWrap               = "Make Safari Screenshot";

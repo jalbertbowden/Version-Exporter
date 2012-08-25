@@ -21,10 +21,10 @@ var versionNumber = 0;
 // Input: <none>, dlgMain is a global for this script
 // Return: <none>, all panels are now hidden
 ///////////////////////////////////////////////////////////////////////////////
-function export_version( currentLayerSetName ){
+function export_version( versionName ){
 
 	// Determine the filename
-	var fileNameBody = exportInfo.fileNamePrefix + "_" + zeroSuppress(versionNumber, 4) + "_" + currentLayerSetName;
+	var fileNameBody = exportInfo.fileNamePrefix + "_" + zeroSuppress(versionNumber, 4) + "_" + String(versionName).trim();
 	fileNameBody = fileNameBody.replace(/[:\/\\*\?\"\<\>\|]/g, "_");  // '/\:*?"<>|' -> '_'
 	fileNameBody = fileNameBody.replace(/_+/g, "_");  // '____' -> '_'
 	fileNameBody = fileNameBody.replace(/\-+/g, "-");  // '---' -> '-'

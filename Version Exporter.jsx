@@ -17,11 +17,14 @@
 //@include 'include/globals.js'
 //@include 'include/config.js'
 //@include 'include/stdlib.js'
-//@include 'include/process.js'
+//@include 'include/processLayers.js'
+//@include 'include/processComps.js'
 //@include 'include/export.js'
 //@include 'include/ui.js'
 //@include 'include/div.js'
+//@include 'include/trimmer.js'
 //@include 'include/log.js'
+//@include 'include/json.js'
 //@include 'include/getSelectedLayers.js'
 
 
@@ -64,8 +67,17 @@ function main(){
 		}
 	}
 
-	// start processing
-	process_main();
+	// Start processing
+	switch (exportInfo.operationMode) {
+		case 0:
+			Log.notice('Operation mode: Layer Sets');
+			processLayers();
+			break;
+		case 1:
+			Log.notice('Operation mode: Comps');
+			processComps();
+			break;
+	}
 
 }
 
@@ -88,19 +100,41 @@ function main_cancel(){
 // Input:		none
 // Return:		none
 ///////////////////////////////////////////////////////////////////////////////
-function main_finish(){
+function main_finish( msg ){
 
-	// Save options
-	var d = objectToDescriptor(exportInfo, strMessage, preProcessExportInfo);
-	app.putCustomOptions(SCRIPT_REGISTRY_ID, d);
+	// Save options in Photoshop
+	// DEPRECATED
+	// var d = objectToDescriptor(exportInfo, strMessage);
+	// app.putCustomOptions(SCRIPT_REGISTRY_ID, d);
 
-	Log.notice('Export is finished');
-	if ( app.playbackDisplayDialogs != DialogModes.NO ) {
-		alert("Export is finished");
+	// Save options in the PSD
+	var instructions = String(origDocRef.info.instructions);
+	var originalInstructions = String(instructions.split(INSTRUCTIONS_SPLIT_TOKEN).shift()).trim();
+	var newInstructionsArray = new Array();
+	newInstructionsArray.push(originalInstructions);
+
+	// Generate JSON
+	var savedSettingsString = JSON.stringify(exportInfo);
+	if ( savedSettingsString ) {
+		Log.notice('Saving settings in METADATA: ' + savedSettingsString);
+		newInstructionsArray.push(INSTRUCTIONS_SPLIT_TOKEN);
+		newInstructionsArray.push(savedSettingsString);
 	}
 
-	// return to initial state
-	//Stdlib.revertToSnapshot(origDocRef, SNAPSHOTNAME);
+	// Save into the instuction field
+	var newInstructionsString = newInstructionsArray.join("\n\n");
+	origDocRef.info.instructions = newInstructionsString;
+
+	// Message for the user
+	var defaultMessage = "Export is finished";
+	var finishMessage = ( msg != undefined ) ? defaultMessage + ": " + String(msg) : defaultMessage;
+
+	Log.notice(finishMessage);
+
+	if ( app.playbackDisplayDialogs != DialogModes.NO ) {
+		alert(finishMessage);
+	}
+
 }
 
 
@@ -114,34 +148,27 @@ function main_init(exportInfo) {
 
 	Log.notice('Initializing export configuration');
 
+	// Step 1: Initialize default parameters
 	exportInfo.destination = new String("");
 	exportInfo.fileNamePrefix = new String("untitled_");
+	exportInfo.operationMode = 0;
 	exportInfo.exportSelected = false;
 	exportInfo.safariWrap = false;
 	exportInfo.safariWrap_windowTitle = 'Website.com';
 	exportInfo.safariWrap_windowURL = 'http://www.website.com';
 	exportInfo.safariWrap_backgroundColor = '#444444';
-	//exportInfo.fastAndSimple = false;
 	exportInfo.fileType = 0;
 	exportInfo.icc = false;
-	// exportInfo.jpegQuality = 12;
-	// exportInfo.pngInterlaced = false;
-	// exportInfo.psdMaxComp = true;
-	// exportInfo.tiffCompression = TIFFEncoding.NONE;
-	// exportInfo.tiffJpegQuality = 12;
-	// exportInfo.pdfEncoding = PDFEncoding.JPEG;
-	// exportInfo.pdfJpegQuality = 8;
-	// exportInfo.targaDepth = TargaBitsPerPixels.TWENTYFOUR;
-	// exportInfo.bmpDepth = BMPDepthType.TWENTYFOUR;
 
-	// Overwrite the defaults with saved values
-	try {
-		var d = app.getCustomOptions(SCRIPT_REGISTRY_ID);
-		descriptorToObject(exportInfo, d, strMessage, postProcessExportInfo);
-	} catch(e) {} // it's ok if we don't have any options, continue with defaults
+	// // Step 2: Overwrite the defaults with values saved in the Photoshop
+	// DEPRECATED
+	// try {
+	// 	var d = app.getCustomOptions(SCRIPT_REGISTRY_ID);
+	// 	descriptorToObject(exportInfo, d, strMessage);
+	// } catch(e) {} // it's ok if we don't have any options, continue with defaults
 
-	// See if I am getting descriptor parameters
-	descriptorToObject(exportInfo, app.playbackParameters, strMessage, postProcessExportInfo);
+	// // See if I am getting descriptor parameters
+	// descriptorToObject(exportInfo, app.playbackParameters, strMessage);
 
 	// Set default destination and filename prefix
 	try {
@@ -154,8 +181,21 @@ function main_init(exportInfo) {
 		exportInfo.fileNamePrefix = app.activeDocument.name; // filename body part
 	}
 
-	// Turn off Safari Wrap by default
-	exportInfo.safariWrap = false;
+	// // Turn off Safari Wrap by default
+	// exportInfo.safariWrap = false;
+
+	// Step 3: Get saved settings for this particular PSD
+	var splitToken = INSTRUCTIONS_SPLIT_TOKEN;
+	var instructions = String(origDocRef.info.instructions);
+	var parts = instructions.split(splitToken);
+	var originalInstructions = String(parts[0]).trim();
+	var savedSettingsString = String(parts[1]).trim();
+	var savedSettings = {};
+	if ( savedSettingsString != "undefined" ) {
+		Log.notice('Settings saved in METADATA: ' + savedSettingsString);
+		savedSettings = JSON.parse(savedSettingsString);
+		MergeObjectsRecursive(exportInfo, savedSettings);
+	}
 
 	// Get configuration for current document
 	documentConfig = config_getCurrentDocConfig(origDocRef);
@@ -207,39 +247,10 @@ function main_init(exportInfo) {
 		exportInfo.exportSelected = false;
 	}
 
-	Log.notice('Finished initialising settings');
+	Log.notice('Finished initializing settings');
 
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// Function: preProcessExportInfo
-// Usage: convert Photoshop enums to strings for storage
-// Input: JavaScript Object of my params for this script
-// Return: JavaScript Object with objects converted for storage
-///////////////////////////////////////////////////////////////////////////////
-function preProcessExportInfo(o) {
-	// o.tiffCompression = o.tiffCompression.toString();
-	// o.pdfEncoding = o.pdfEncoding.toString();
-	// o.targaDepth = o.targaDepth.toString();
-	// o.bmpDepth = o.bmpDepth.toString();
-	return o;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Function: postProcessExportInfo
-// Usage: convert strings from storage to Photoshop enums
-// Input: JavaScript Object of my params in string form
-// Return: JavaScript Object with objects in enum form
-///////////////////////////////////////////////////////////////////////////////
-function postProcessExportInfo(o) {
-	// o.tiffCompression = eval(o.tiffCompression);
-	// o.pdfEncoding = eval(o.pdfEncoding);
-	// o.targaDepth = eval(o.targaDepth);
-	// o.bmpDepth = eval(o.bmpDepth);
-	return o;
-}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -255,44 +266,42 @@ function postProcessExportInfo(o) {
 //        modify. I am not using include or eval statements as I want these
 //        scripts self contained.
 ///////////////////////////////////////////////////////////////////////////////
-function objectToDescriptor (o, s, f) {
-	if (undefined != f) {
-		o = f(o);
-	}
-	var d = new ActionDescriptor;
-	var l = o.reflect.properties.length;
-	d.putString( app.charIDToTypeID( 'Msge' ), s );
-	for (var i = 0; i < l; i++ ) {
-		var k = o.reflect.properties[i].toString();
-		if (k == "__proto__" || k == "__count__" || k == "__class__" || k == "reflect")
-			continue;
-		var v = o[ k ];
-		k = app.stringIDToTypeID(k);
-		switch ( typeof(v) ) {
-			case "boolean":
-				d.putBoolean(k, v);
-				break;
-			case "string":
-				d.putString(k, v);
-				break;
-			case "number":
-				d.putDouble(k, v);
-				break;
-			default:
-			{
-				if ( v instanceof UnitValue ) {
-					var uc = new Object;
-					uc["px"] = charIDToTypeID("#Rlt"); // unitDistance
-					uc["%"] = charIDToTypeID("#Prc"); // unitPercent
-					d.putUnitDouble(k, uc[v.type], v.value);
-				} else {
-					throw( new Error("Unsupported type in objectToDescriptor " + typeof(v) ) );
-				}
-			}
-		}
-	}
-	return d;
-}
+// function objectToDescriptor (o, s, f) {
+// 	if (undefined != f) o = f(o);
+// 	var d = new ActionDescriptor;
+// 	var l = o.reflect.properties.length;
+// 	d.putString( app.charIDToTypeID( 'Msge' ), s );
+// 	for (var i = 0; i < l; i++ ) {
+// 		var k = o.reflect.properties[i].toString();
+// 		if (k == "__proto__" || k == "__count__" || k == "__class__" || k == "reflect")
+// 			continue;
+// 		var v = o[ k ];
+// 		k = app.stringIDToTypeID(k);
+// 		switch ( typeof(v) ) {
+// 			case "boolean":
+// 				d.putBoolean(k, v);
+// 				break;
+// 			case "string":
+// 				d.putString(k, v);
+// 				break;
+// 			case "number":
+// 				d.putDouble(k, v);
+// 				break;
+// 			default:
+// 			{
+// 				if ( v instanceof UnitValue ) {
+// 					var uc = new Object;
+// 					uc["px"] = charIDToTypeID("#Rlt"); // unitDistance
+// 					uc["%"] = charIDToTypeID("#Prc"); // unitPercent
+// 					d.putUnitDouble(k, uc[v.type], v.value);
+// 				} else {
+// 					throw( new Error("Unsupported type in objectToDescriptor " + typeof(v) ) );
+// 				}
+// 			}
+// 		}
+// 	}
+// 	return d;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -309,53 +318,53 @@ function objectToDescriptor (o, s, f) {
 //        modify. I am not using include or eval statements as I want these
 //        scripts self contained.
 ///////////////////////////////////////////////////////////////////////////////
-function descriptorToObject (o, d, s, f) {
-	var l = d.count;
-	if (l) {
-		var keyMessage = app.charIDToTypeID( 'Msge' );
-		if ( d.hasKey(keyMessage) && ( s != d.getString(keyMessage) )) return;
-	}
-	for (var i = 0; i < l; i++ ) {
-		var k = d.getKey(i); // i + 1 ?
-		var t = d.getType(k);
-		strk = app.typeIDToStringID(k);
-		switch (t) {
-			case DescValueType.BOOLEANTYPE:
-				o[strk] = d.getBoolean(k);
-				break;
-			case DescValueType.STRINGTYPE:
-				o[strk] = d.getString(k);
-				break;
-			case DescValueType.DOUBLETYPE:
-				o[strk] = d.getDouble(k);
-				break;
-			case DescValueType.UNITDOUBLE:
-				{
-				var uc = new Object;
-				uc[charIDToTypeID("#Rlt")] = "px"; // unitDistance
-				uc[charIDToTypeID("#Prc")] = "%"; // unitPercent
-				uc[charIDToTypeID("#Pxl")] = "px"; // unitPixels
-				var ut = d.getUnitDoubleType(k);
-				var uv = d.getUnitDoubleValue(k);
-				o[strk] = new UnitValue( uv, uc[ut] );
-				}
-				break;
-			case DescValueType.INTEGERTYPE:
-			case DescValueType.ALIASTYPE:
-			case DescValueType.CLASSTYPE:
-			case DescValueType.ENUMERATEDTYPE:
-			case DescValueType.LISTTYPE:
-			case DescValueType.OBJECTTYPE:
-			case DescValueType.RAWTYPE:
-			case DescValueType.REFERENCETYPE:
-			default:
-				throw( new Error("Unsupported type in descriptorToObject " + t ) );
-		}
-	}
-	if (undefined != f) {
-		o = f(o);
-	}
-}
+// function descriptorToObject (o, d, s, f) {
+// 	var l = d.count;
+// 	if (l) {
+// 		var keyMessage = app.charIDToTypeID( 'Msge' );
+// 		if ( d.hasKey(keyMessage) && ( s != d.getString(keyMessage) )) return;
+// 	}
+// 	for (var i = 0; i < l; i++ ) {
+// 		var k = d.getKey(i); // i + 1 ?
+// 		var t = d.getType(k);
+// 		strk = app.typeIDToStringID(k);
+// 		switch (t) {
+// 			case DescValueType.BOOLEANTYPE:
+// 				o[strk] = d.getBoolean(k);
+// 				break;
+// 			case DescValueType.STRINGTYPE:
+// 				o[strk] = d.getString(k);
+// 				break;
+// 			case DescValueType.DOUBLETYPE:
+// 				o[strk] = d.getDouble(k);
+// 				break;
+// 			case DescValueType.UNITDOUBLE:
+// 				{
+// 				var uc = new Object;
+// 				uc[charIDToTypeID("#Rlt")] = "px"; // unitDistance
+// 				uc[charIDToTypeID("#Prc")] = "%"; // unitPercent
+// 				uc[charIDToTypeID("#Pxl")] = "px"; // unitPixels
+// 				var ut = d.getUnitDoubleType(k);
+// 				var uv = d.getUnitDoubleValue(k);
+// 				o[strk] = new UnitValue( uv, uc[ut] );
+// 				}
+// 				break;
+// 			case DescValueType.INTEGERTYPE:
+// 			case DescValueType.ALIASTYPE:
+// 			case DescValueType.CLASSTYPE:
+// 			case DescValueType.ENUMERATEDTYPE:
+// 			case DescValueType.LISTTYPE:
+// 			case DescValueType.OBJECTTYPE:
+// 			case DescValueType.RAWTYPE:
+// 			case DescValueType.REFERENCETYPE:
+// 			default:
+// 				throw( new Error("Unsupported type in descriptorToObject " + t ) );
+// 		}
+// 	}
+// 	if (undefined != f) {
+// 		o = f(o);
+// 	}
+// }
 
 
 //////////////////////////////////////////////////////////////////////////

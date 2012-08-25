@@ -15,24 +15,21 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Function:	process_main
+// Function:	processLayers
 // Usage:		main routine of the processing
 // Input:		none
 // Return:		none
 ///////////////////////////////////////////////////////////////////////////////
-function process_main() {
+function processLayers() {
 
 	// Work with duplicate
 	docRef = origDocRef.duplicate();
 
 	// Get selected Layers
-	var selectedLayers = getSelectedLayers();
+	var selectedLayers = exportInfo.exportSelected ? getSelectedLayers() : false;
 
 	// Put all root layers in layerSets and name them accordingly
 	groupRootLayers();
-
-	// Get existing background layer or merge it from a background layerSet
-	processBackground();
 
 	// Check if we have something to work with
 	if (!docRef.layerSets.length) {
@@ -40,9 +37,17 @@ function process_main() {
 		return main_cancel();
 	}
 
+	// Get existing background layer or merge it from a background layerSet
+	processBackground();
+
+	// Setting local variables optimizes the speed of the script
+	var layerSets = docRef.layerSets;
+	var layerSetsLength = layerSets.length;
+
 	// Hide all root layerSets
-	for (var i = 0; i < docRef.layerSets.length; i++ ){
-		docRef.layerSets[i].visible = 0;
+	for (var i = 0; i < layerSetsLength; i++ ){
+		var currentLayerSet = layerSets[i];
+		currentLayerSet.visible = false;
 	}
 
 	// Show background layer
@@ -52,14 +57,10 @@ function process_main() {
 	Stdlib.takeSnapshot(docRef);
 
 	// Cycle through the layerSets
-	for (var i = 0; i < docRef.layerSets.length; i++ ){
+	for (var i = 0; i < layerSetsLength; i++ ){
 
 		// Define current layerSet
-		var currentLayerSet = docRef.layerSets[i];
-
-		// Select the layerSet and make it visible;
-		docRef.activeLayer = currentLayerSet;
-		currentLayerSet.visible = true;
+		var currentLayerSet = layerSets[i];
 
 		// Skip Background
 		if ( currentLayerSet == backgroundLayerSet ) continue;
@@ -78,13 +79,17 @@ function process_main() {
 			case SMARTSETCOLOR:
 
 				// Filter if Export Selected is enabled
-				if (exportInfo.exportSelected && selectedLayers) {
+				if (selectedLayers) {
 					if ( selectedLayers.indexOf(currentLayerSet) < 0 )  {
 						versionNumber++;
 						currentLayerSet.visible = false;
 						break;
 					}
 				}
+
+				// Select the layerSet and make it visible;
+				docRef.activeLayer = currentLayerSet;
+				currentLayerSet.visible = true;
 
 				// Process the SmartLayerSet
 				processSmartLayerSet(currentLayerSet);
@@ -112,13 +117,17 @@ function process_main() {
 			default:
 
 				// Filter if Export Selected is enabled
-				if (exportInfo.exportSelected && selectedLayers) {
+				if (selectedLayers) {
 					if ( selectedLayers.indexOf(currentLayerSet) < 0 )  {
 						versionNumber++;
 						currentLayerSet.visible = false;
 						break;
 					}
 				}
+
+				// Select the layerSet and make it visible;
+				docRef.activeLayer = currentLayerSet;
+				currentLayerSet.visible = true;
 
 				// Trim document
 				try {
@@ -305,19 +314,38 @@ function processBackground(){
 	// Check if there is a Background LayerSet
 	try {
 
+		// DEPRECATED
+		// Accessing the names of the layers sets takes too long, so we don't use it anymore
+
 		// There might be several layerSets named "Background"
-		var backgroundsLayers = Stdlib.getAllByName(docRef.layerSets, BACKGROUNDLAYERSETNAME);
+
+		// Option 1
+		// var backgroundsLayers = Stdlib.getAllByName(docRef.layerSets, BACKGROUNDLAYERSETNAME);
+
+		// Option 2 (simplified)
+		// var backgroundsLayers = [];
+		// for (var i = 0; i < docRef.layerSets.length; i++) {
+		// 	alert(docRef.layerSets[i].name)
+		// 	if (docRef.layerSets[i].name == BACKGROUNDLAYERSETNAME) {
+		// 		backgroundsLayers.push(docRef.layerSets[i]);
+		// 	}
+		// }
 
 		// Rename all the layers, except for the last one
-		for  (var i = 0; i < (backgroundsLayers.length - 1); i++ ) {
-			backgroundsLayers[i].name = BACKGROUNDLAYERSETNAME + ' ' + (i + 1);
+		// for  (var i = 0; i < (backgroundsLayers.length - 1); i++ ) {
+		// 	backgroundsLayers[i].name = BACKGROUNDLAYERSETNAME + ' ' + (i + 1);
+		// }
+
+		// // set the global reference to the last background layerSet
+		// backgroundLayerSet = backgroundsLayers[backgroundsLayers.length - 1];
+
+		// // move it to the very bottom
+		// backgroundLayerSet.move( docRef.layerSets[docRef.layerSets.length - 1], ElementPlacement.PLACEAFTER );
+
+		var lastLayerSet = docRef.layerSets[docRef.layerSets.length - 1];
+		if (lastLayerSet.name == BACKGROUNDLAYERSETNAME) {
+			backgroundLayerSet = lastLayerSet;
 		}
-
-		// set the global reference to the last background layerSet
-		backgroundLayerSet = backgroundsLayers[backgroundsLayers.length - 1];
-
-		// move it to the very bottom
-		backgroundLayerSet.move( docRef.layerSets[docRef.layerSets.length - 1], ElementPlacement.PLACEAFTER );
 
 	} catch (e) {}
 

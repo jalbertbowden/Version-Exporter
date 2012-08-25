@@ -35,7 +35,7 @@ function MergeObjectsRecursive(obj1, obj2) {
 	}
 	//alert("Return:\n\n" +obj1+"\n\n"+ obj2);
 	// I could'nt figure out this bug. For some reason it returns 'undefined' if obj2 has a property
-	// Obejct{} (empty object) and obj1 has not this property at all. Or similar situation.	This helps for some reason...
+	// Obejct{} (empty object) and obj1 doesn't have this property at all. Or similar situation. This helps for some reason...
 	if (obj1.toSource) obj1.toSource();
 	return obj1;
 }
@@ -72,6 +72,9 @@ var Url = {
 		return Folder(basePath).fullName;
 	},
 }
+
+
+
 
 
 

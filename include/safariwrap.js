@@ -94,7 +94,7 @@ function SafariWrap( docRef ) {
 
 		// 1. Sources folder is specified in the configuration
 		try {
-			Log.notice('Safari Wrap: SOurces folder specified in configuration: ' + documentConfig.SafariWrap.sourcesPath);
+			Log.notice('Safari Wrap: Sources folder specified in configuration: ' + documentConfig.SafariWrap.sourcesPath);
 			if (!documentConfig.SafariWrap.sourcesPath) throw(undefined);
 			// Also try to get absolute path if relative one is specified
 			sourcesPath = Url.getAbsolute(currentDocumentPath, documentConfig.SafariWrap.sourcesPath);
@@ -277,7 +277,7 @@ function SafariWrap( docRef ) {
 
 		// Add shadow
 		Stdlib.pasteStyles( docRef, windowLayer, true );
-		makeRCrectangle( 0, 0, docRef.height.value, docRef.width.value, 5 );
+		makeRCrectangle( 0, 0, docRef.height.value, docRef.width.value, 0 );
 		Stdlib.createVectorMaskFromCurrentPath(docRef, windowLayer);
 		Stdlib.rasterizeVectorMask(docRef, windowLayer);
 		Stdlib.applyLayerMask(docRef, windowLayer);

@@ -41,7 +41,13 @@ function config_getCurrentDocConfig(doc){
 			Log.notice('Looking for projects index: ' + projectsIndexFile );
 
 			// If not there, will throw error and return
-			var projectsIndexJSON = Stdlib.readFromFile(projectsIndexFile);
+			try {
+				var projectsIndexJSON = Stdlib.readFromFile(projectsIndexFile);
+			} catch(e) {
+				Log.error('Index file not found');
+				return;
+			}
+
 			var projectsIndex = eval(projectsIndexJSON);
 
 			Log.notice('Found projects index. Looking for location: ' + documentLocation);

@@ -37,13 +37,14 @@ function ui_settingsDialog(exportInfo) {
 				label: StaticText { text: '"+ strLabelFileNamePrefix +"', preferredSize: [ 140, 15 ] }, \
 				field: EditText { text: '"+ escapeString(exportInfo.fileNamePrefix) +"', preferredSize: [ 390, 20 ] }, \
 			}, \
-			grpExportSelected: Group { \
-				label: StaticText { text: '"+ strLabelExportSelected +"', preferredSize: [ 140, 15 ] }, \
-				field: Checkbox { text: '', value: "+ exportInfo.exportSelected +" }, \
+			grpOperationMode: Group { \
+				label: StaticText { text: '"+ strLabelMode +"', preferredSize: [ 140, 15 ] }, \
+				field:  DropDownList { preferredSize: [ 390, 25 ] }, \
 			}, \
-			grpTrim: Group { \
-				label: StaticText { text: '"+ strLabelTrim +"', preferredSize: [ 140, 15 ] }, \
-				field: Checkbox { text: '', value: "+ exportInfo.trim +" }, \
+			grpOptions: Group { \
+				label: StaticText { text: '', preferredSize: [ 140, 15 ] }, \
+				fieldExportSelected: Checkbox { text: '"+ strLabelExportSelected +"', value: "+ exportInfo.exportSelected +" }, \
+				fieldTrim: Checkbox { text: '"+ strLabelTrim +"', value: "+ exportInfo.trim +" }, \
 			}, \
 			pnlSafariWrap: Panel { \
 				text: '"+ escapeString(strSafariWrap) +"', \
@@ -109,17 +110,21 @@ function ui_settingsDialog(exportInfo) {
 
 	dlgMain = new Window(res);
 
+	// Adding operation modes
+	var operationModeDropdown = dlgMain.grpOperationMode.field;
+	for (var i = 0; i < operationModes.length; i++ ) {
+		var item = operationModeDropdown.add( "item", operationModes[i] );
+		if ( exportInfo.operationMode == i ) item.selected = true;
+	}
+
+	// File types selector
 	var selectedIndex;
 	var selectedFileType;
-
-	// Adding items to the file types selector
 	var FileTypeDropDown = dlgMain.pnlExportSettings.grpFileType.field;
 	for (var i = 0; i < fileTypes.length; i++ ) {
 		var item = FileTypeDropDown.add( "item", fileTypes[i] );
 		if ( exportInfo.fileType == i ) item.selected = true;
 	}
-
-	// Set onChange Event
 	FileTypeDropDown.onChange = onFileTypeChange;
 	onFileTypeChange();
 
@@ -144,8 +149,9 @@ function ui_settingsDialog(exportInfo) {
 	// Get settings from dialog
 	exportInfo.destination                  = dlgMain.grpDestination.field.text;
 	exportInfo.fileNamePrefix               = dlgMain.grpFilenamePrefix.field.text;
-	exportInfo.exportSelected               = dlgMain.grpExportSelected.field.value;
-	exportInfo.trim                         = dlgMain.grpTrim.field.value;
+	exportInfo.operationMode                = dlgMain.grpOperationMode.field.selection.index;
+	exportInfo.exportSelected               = dlgMain.grpOptions.fieldExportSelected.value;
+	exportInfo.trim                         = dlgMain.grpOptions.fieldTrim.value;
 
 	exportInfo.safariWrap                   = dlgMain.pnlSafariWrap.grpEnable.field.value;
 	exportInfo.safariWrap_windowTitle       = dlgMain.pnlSafariWrap.grpWindowTitle.field.text;
