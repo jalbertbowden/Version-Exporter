@@ -24,7 +24,9 @@ var versionNumber = 0;
 function export_version( versionName ){
 
 	// Determine the filename
-	var fileNameBody = exportInfo.fileNamePrefix + "_" + zeroSuppress(versionNumber, 4) + "_" + String(versionName).trim();
+	var fileNameBody = "";
+	if (exportInfo.fileNamePrefix) fileNameBody += exportInfo.fileNamePrefix + "_";
+	fileNameBody += zeroSuppress(versionNumber, 4) + "_" + String(versionName).trim();
 	fileNameBody = fileNameBody.replace(/[:\/\\*\?\"\<\>\|]/g, "_");  // '/\:*?"<>|' -> '_'
 	fileNameBody = fileNameBody.replace(/_+/g, "_");  // '____' -> '_'
 	fileNameBody = fileNameBody.replace(/\-+/g, "-");  // '---' -> '-'
