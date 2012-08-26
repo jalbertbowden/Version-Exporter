@@ -31,7 +31,7 @@ function ui_settingsDialog(exportInfo) {
 			grpDestination: Group { \
 				label: StaticText { text: '"+ escapeString(strLabelDestination) +"', preferredSize: [ 140, 15 ] }, \
 				field: EditText { text: '"+ escapeString(exportInfo.destination) +"', preferredSize: [ 300, 21 ] }, \
-				btnBrowse: Button { text: '"+ escapeString(strButtonBrowse) +"', preferredSize: [ 80, 20 ] } \
+				btnBrowse: Button { text: '"+ escapeString(strButtonBrowse) +"', preferredSize: [ 80, 23 ] } \
 			}, \
 			grpFilenamePrefix: Group { \
 				label: StaticText { text: '"+ strLabelFileNamePrefix +"', preferredSize: [ 140, 15 ] }, \
