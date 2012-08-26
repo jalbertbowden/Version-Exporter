@@ -30,12 +30,12 @@ function ui_settingsDialog(exportInfo) {
 			alignChildren: 'left', \
 			grpDestination: Group { \
 				label: StaticText { text: '"+ escapeString(strLabelDestination) +"', preferredSize: [ 140, 15 ] }, \
-				field: EditText { text: '"+ escapeString(exportInfo.destination) +"', preferredSize: [ 300, 20 ] }, \
+				field: EditText { text: '"+ escapeString(exportInfo.destination) +"', preferredSize: [ 300, 21 ] }, \
 				btnBrowse: Button { text: '"+ escapeString(strButtonBrowse) +"', preferredSize: [ 80, 20 ] } \
 			}, \
 			grpFilenamePrefix: Group { \
 				label: StaticText { text: '"+ strLabelFileNamePrefix +"', preferredSize: [ 140, 15 ] }, \
-				field: EditText { text: '"+ escapeString(exportInfo.fileNamePrefix) +"', preferredSize: [ 390, 20 ] }, \
+				field: EditText { text: '"+ escapeString(exportInfo.fileNamePrefix) +"', preferredSize: [ 390, 21 ] }, \
 			}, \
 			grpOperationMode: Group { \
 				label: StaticText { text: '"+ strLabelMode +"', preferredSize: [ 140, 15 ] }, \
@@ -50,36 +50,39 @@ function ui_settingsDialog(exportInfo) {
 				text: '"+ escapeString(strSafariWrap) +"', \
 				alignment: 'fill', \
 				alignChildren: 'left', \
+				margins: [ 20, 20, 20, 20], \
 				grpEnable: Group { \
 					label: StaticText { text: '"+ escapeString(strEnable) +"', preferredSize: [ 120, 15 ] }, \
 					field: Checkbox { text: '', value: "+ exportInfo.safariWrap +" }, \
 				}, \
 				grpWindowTitle: Group { \
 					label: StaticText { text: '"+ escapeString(strWindowTitle) +"', preferredSize: [ 120, 15 ] }, \
-					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_windowTitle) +"', preferredSize: [ 370, 20 ] }, \
+					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_windowTitle) +"', preferredSize: [ 370, 21 ] }, \
 				}, \
 				grpWindowURL: Group { \
 					label: StaticText { text: '"+ escapeString(strWindowURL) +"', preferredSize: [ 120, 15 ] }, \
-					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_windowURL) +"', preferredSize: [ 370, 20 ] }, \
+					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_windowURL) +"', preferredSize: [ 370, 21 ] }, \
 				}, \
 				grpBackgroundColor: Group { \
 					label: StaticText { text: '"+ escapeString(strBackgroundColor) +"', preferredSize: [ 120, 15 ] }, \
-					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_backgroundColor) +"', preferredSize: [ 370, 20 ] }, \
+					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_backgroundColor) +"', preferredSize: [ 370, 21 ] }, \
 				}, \
 			}, \
 			pnlExportSettings: Panel { \
 				text: '"+ escapeString(strExportSettings) +"', \
 				alignment: 'fill', \
 				alignChildren: 'left', \
+				margins: [ 20, 20, 20, 10], \
 				grpFileType: Group { \
 					label: StaticText { text: '"+ escapeString(strFileType) +"', preferredSize: [ 120, 15 ] }, \
-					field: DropDownList { preferredSize: [ 100, 20 ] }, \
+					field: DropDownList { preferredSize: [ 100, 25 ] }, \
 				}, \
 				grpIncludeICCProfile: Group { \
 					label: StaticText { text: '"+ escapeString(strIncludeICCProfile) +"', preferredSize: [ 120, 15 ] }, \
 					field: Checkbox { text: '', value: "+ exportInfo.icc +" }, \
 				}, \
 				grpOptions: Group { \
+					visible: false, \
 					orientation: 'stack', \
 					grpJPGOptions: Group { \
 						visible: false, \
@@ -238,7 +241,9 @@ function  onCancelButtonPress(){
 // Return: void
 ///////////////////////////////////////////////////////////////////////////////
 function onHelpButtonPress(){
-	alert('Help is coming soon...')
+	var path = Stdlib.getScriptFolder() + '/../docs';
+	var docsFolder = new Folder(path);
+	docsFolder.execute();
 }
 
 
