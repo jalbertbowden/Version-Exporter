@@ -24,7 +24,7 @@
 //@include 'include/div.js'
 //@include 'include/trimmer.js'
 //@include 'include/log.js'
-//@include 'include/json.js'
+//@include 'include/json2.js'
 //@include 'include/getSelectedLayers.js'
 
 
