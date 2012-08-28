@@ -52,6 +52,13 @@ var strLabelLayerSets  			        = "Use Layer Sets as versions";
 var strLabelComps			            = "Use Comps as versions";
 var operationModes						= [ strLabelLayerSets, strLabelComps ];
 
+var strLabelWrapper						= "Wrapper";
+var strLabelWrapperMode					= "Wrapper Mode";
+var strLabelDisableWrap					= "Disabled";
+var strLabelSafariWrap					= "Safari Wrap";
+var strLabelFirefoxWrap					= "Firefox Wrap";
+var wrapperModes						= [ strLabelDisableWrap, strLabelSafariWrap, strLabelFirefoxWrap ];
+
 // the drop down list indexes for tiff compression
 var compNoneIndex                       = 0;
 var compLZWIndex                        = 1;
@@ -67,9 +74,10 @@ var strTitle                            = "Versions Exporter"
 var strButtonRun                        = "Run"
 var strButtonCancel                     = "Cancel"
 var strButtonHelp                       = "Documentation"
+var strButtonCreateConfig				= "Create Project Configuration"
+var strButtonEditConfig					= "Edit Project Configuration"
 var strHelpText                         = "Please specify the format and location for saving each layer as a file."
 var strLabelDestination                 = "Destination:"
-var strLabelSafariWrap                  = "Safari Wrap";
 var strButtonBrowse                     = "&Browse..."
 var strLabelFileNamePrefix              = "Filename Prefix:"
 var strCheckboxVisibleOnly              = "&Visible Layers Only"

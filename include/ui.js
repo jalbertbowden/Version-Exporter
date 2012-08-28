@@ -46,14 +46,14 @@ function ui_settingsDialog(exportInfo) {
 				fieldExportSelected: Checkbox { text: '"+ strLabelExportSelected +"', value: "+ exportInfo.exportSelected +" }, \
 				fieldTrim: Checkbox { text: '"+ strLabelTrim +"', value: "+ exportInfo.trim +" }, \
 			}, \
-			pnlSafariWrap: Panel { \
-				text: '"+ escapeString(strSafariWrap) +"', \
+			pnlWrapper: Panel { \
+				text: '"+ escapeString(strLabelWrapper) +"', \
 				alignment: 'fill', \
 				alignChildren: 'left', \
 				margins: [ 20, 20, 20, 20], \
-				grpEnable: Group { \
-					label: StaticText { text: '"+ escapeString(strEnable) +"', preferredSize: [ 120, 15 ] }, \
-					field: Checkbox { text: '', value: "+ exportInfo.safariWrap +" }, \
+				grpWrapperMode: Group { \
+					label: StaticText { text: '"+ escapeString(strLabelWrapperMode) +"', preferredSize: [ 120, 15 ] }, \
+					field: DropDownList { preferredSize: [ 370, 25 ] }, \
 				}, \
 				grpWindowTitle: Group { \
 					label: StaticText { text: '"+ escapeString(strWindowTitle) +"', preferredSize: [ 120, 15 ] }, \
@@ -101,7 +101,11 @@ function ui_settingsDialog(exportInfo) {
 			grpButtons: Group { \
 				orientation: 'stack', \
 				alignment: 'fill', \
-				btnHelp: Button { text: '"+ escapeString(strButtonHelp) +"',  alignment: 'left' }, \
+				grpLeft: Group { \
+					alignment: 'left', \
+					btnHelp: Button { text: '"+ escapeString(strButtonHelp) +"',  alignment: 'left' }, \
+					btnConfig: Button { text: '"+ escapeString(strButtonCreateConfig) +"',  alignment: 'left' }, \
+				}, \
 				grpRight: Group { \
 					alignment: 'right', \
 					btnRun: Button { text: '"+ escapeString(strButtonRun) +"', alignment: 'right', properties: { name:'ok' } }, \
@@ -120,6 +124,13 @@ function ui_settingsDialog(exportInfo) {
 		if ( exportInfo.operationMode == i ) item.selected = true;
 	}
 
+	// Adding Wrapper Modes
+	var dropdown = dlgMain.pnlWrapper.grpWrapperMode.field;
+	for (var i = 0; i < wrapperModes.length; i++ ) {
+		var item = dropdown.add( "item", wrapperModes[i] );
+		if ( exportInfo.Wrapper.mode == i ) item.selected = true;
+	}
+
 	// File types selector
 	var selectedIndex;
 	var selectedFileType;
@@ -135,7 +146,8 @@ function ui_settingsDialog(exportInfo) {
 	dlgMain.grpDestination.btnBrowse.onClick        = onBrowseButtonPress;
 	dlgMain.grpButtons.grpRight.btnRun.onClick      = onRunButtonPress;
 	dlgMain.grpButtons.grpRight.btnCancel.onClick   = onCancelButtonPress;
-	dlgMain.grpButtons.btnHelp.onClick              = onHelpButtonPress;
+	dlgMain.grpButtons.grpLeft.btnHelp.onClick      = onHelpButtonPress;
+	dlgMain.grpButtons.grpLeft.btnConfig.onClick    = onConfigButtonPress;
 
 	// Open Window
 	app.bringToFront();
@@ -150,19 +162,25 @@ function ui_settingsDialog(exportInfo) {
 	Log.notice("Sending positive response from the dialog");
 
 	// Get settings from dialog
-	exportInfo.destination                  = dlgMain.grpDestination.field.text;
-	exportInfo.fileNamePrefix               = dlgMain.grpFilenamePrefix.field.text;
-	exportInfo.operationMode                = dlgMain.grpOperationMode.field.selection.index;
-	exportInfo.exportSelected               = dlgMain.grpOptions.fieldExportSelected.value;
-	exportInfo.trim                         = dlgMain.grpOptions.fieldTrim.value;
+    exportInfo.destination                  = dlgMain.grpDestination.field.text;
+    exportInfo.fileNamePrefix               = dlgMain.grpFilenamePrefix.field.text;
+    exportInfo.operationMode                = dlgMain.grpOperationMode.field.selection.index;
+    exportInfo.exportSelected               = dlgMain.grpOptions.fieldExportSelected.value;
+    exportInfo.trim                         = dlgMain.grpOptions.fieldTrim.value;
 
-	exportInfo.safariWrap                   = dlgMain.pnlSafariWrap.grpEnable.field.value;
-	exportInfo.safariWrap_windowTitle       = dlgMain.pnlSafariWrap.grpWindowTitle.field.text;
-	exportInfo.safariWrap_windowURL         = dlgMain.pnlSafariWrap.grpWindowURL.field.text;
-	exportInfo.safariWrap_backgroundColor   = dlgMain.pnlSafariWrap.grpBackgroundColor.field.text;
+    exportInfo.Wrapper.mode                 = dlgMain.pnlWrapper.grpWrapperMode.field.selection.index;
+    exportInfo.Wrapper.windowTitle          = dlgMain.pnlWrapper.grpWindowTitle.field.text;
+    exportInfo.Wrapper.windowURL            = dlgMain.pnlWrapper.grpWindowURL.field.text;
+    exportInfo.Wrapper.backgroundColor      = dlgMain.pnlWrapper.grpBackgroundColor.field.text;
 
-	exportInfo.fileType                     = dlgMain.pnlExportSettings.grpFileType.field.selection.index;
-	exportInfo.icc                          = dlgMain.pnlExportSettings.grpIncludeICCProfile.field.value;
+    // Backwards comptibility
+    // exportInfo.safariWrap                   = dlgMain.pnlWrapper.grpEnable.field.value;
+    // exportInfo.safariWrap_windowTitle       = dlgMain.pnlWrapper.grpWindowTitle.field.text;
+    // exportInfo.safariWrap_windowURL         = dlgMain.pnlWrapper.grpWindowURL.field.text;
+    // exportInfo.safariWrap_backgroundColor   = dlgMain.pnlWrapper.grpBackgroundColor.field.text;
+
+    exportInfo.fileType                     = dlgMain.pnlExportSettings.grpFileType.field.selection.index;
+    exportInfo.icc                          = dlgMain.pnlExportSettings.grpIncludeICCProfile.field.value;
 
 	return result;
 
@@ -244,6 +262,16 @@ function onHelpButtonPress(){
 	var path = Stdlib.getScriptFolder() + '/../docs';
 	var docsFolder = new Folder(path);
 	docsFolder.execute();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Function: onConfigButtonPress
+// Usage:
+// Input: void
+// Return: void
+///////////////////////////////////////////////////////////////////////////////
+function onConfigButtonPress(){
+	alert("Coming soon...");
 }
 
 

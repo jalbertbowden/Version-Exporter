@@ -93,6 +93,7 @@ function processLayers() {
 
 				// Process the SmartLayerSet
 				processSmartLayerSet(currentLayerSet);
+
 				// For SmartLayerSets hide the background
 				if ( backgroundLayerSet ) backgroundLayerSet.visible = false;
 
@@ -142,7 +143,7 @@ function processLayers() {
 				// Revert is needed when trimming
 				Stdlib.revertToLastSnapshot(docRef);
 
-				// hide current layer
+				// Hide current layer
 				currentLayerSet.visible = false;
 				break;
 		} // switch (layerColor) {

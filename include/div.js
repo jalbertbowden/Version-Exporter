@@ -17,6 +17,14 @@ function is_array(input){
 	return typeof(input)=='object'&&(input instanceof Array);
 }
 
+function isGiven(v) {
+	return v!=undefined && v!=null && String(v).length>0;
+}
+
+function convertToString(s) {
+	return String(s);
+}
+
 function MergeObjectsRecursive(obj1, obj2) {
 	//alert("Received:\n\n" +obj1+"\n\n"+ obj2);
 	for (var p in obj2) {

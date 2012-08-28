@@ -128,10 +128,14 @@ function config_getCurrentDocConfig(doc){
 		return;
 	}
 
-	if ( documentConfig ) {
-		Log.notice("Successfully got configuration" );
-	} else {
+	documentConfig ?
+		Log.notice("Successfully got configuration" ) :
 		Log.notice('Configuration for document "'+ doc.name +'"" was not found' );
+
+	// Copy SafariWrap to Wrapper
+	if ( documentConfig.SafariWrap ) {
+		documentConfig.Wrapper = documentConfig.SafariWrap;
+		Log.warning('Found deprecated "SafariWrap" settings, copied to "Wrapper" settings');
 	}
 
 	return documentConfig;

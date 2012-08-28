@@ -22,7 +22,7 @@
 //@include 'include/div.js'
 //@include 'include/log.js'
 
-//@include 'include/safariwrap.js'
+//@include 'include/wrap_safari.js'
 
 // Dispatch
 main();
@@ -79,10 +79,6 @@ function main_cancel(){
 // Return:		none
 ///////////////////////////////////////////////////////////////////////////////
 function main_finish(){
-
-	// Save options
-	var d = objectToDescriptor(exportInfo, strMessage, preProcessExportInfo);
-	app.putCustomOptions(SCRIPT_REGISTRY_ID, d);
 
 	Log.notice('Export is finished');
 	if ( app.playbackDisplayDialogs != DialogModes.NO ) {
