@@ -157,23 +157,23 @@ function main_init(exportInfo) {
 	Log.notice('Initializing export configuration');
 
 	// Initialize default parameters
-	exportInfo.destination = new String("");
-	exportInfo.fileNamePrefix = new String("untitled");
-	exportInfo.operationMode = 0;
-	exportInfo.exportSelected = false;
-	exportInfo.fileType = 0;
-	exportInfo.icc = false;
+    exportInfo.destination                  = new String("");
+    exportInfo.fileNamePrefix               = new String("untitled");
+    exportInfo.operationMode                = 0;
+    exportInfo.exportSelected               = false;
+    exportInfo.fileType                     = 0;
+    exportInfo.icc                          = false;
 
-	exportInfo.Wrapper = {};
-	exportInfo.Wrapper.mode = 0;
-	exportInfo.Wrapper.windowTitle = 'Website.com';
-	exportInfo.Wrapper.windowURL = 'http://www.website.com';
-	exportInfo.Wrapper.backgroundColor = '#444444'
+    exportInfo.Wrapper                      = {};
+    exportInfo.Wrapper.mode                 = 0;
+    exportInfo.Wrapper.windowTitle          = 'Website.com';
+    exportInfo.Wrapper.url                  = 'http://www.website.com';
+    exportInfo.Wrapper.backgroundColor      = '#444444'
 
-	exportInfo.safariWrap = false;
-	exportInfo.safariWrap_windowTitle = 'Website.com';
-	exportInfo.safariWrap_windowURL = 'http://www.website.com';
-	exportInfo.safariWrap_backgroundColor = '#444444';
+    // exportInfo.safariWrap                   = false;
+    // exportInfo.safariWrap_windowTitle       = 'Website.com';
+    // exportInfo.safariWrap_windowURL         = 'http://www.website.com';
+    // exportInfo.safariWrap_backgroundColor   = '#444444';
 
 	// Set default destination and filename prefix
 	try {

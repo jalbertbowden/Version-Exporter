@@ -84,10 +84,11 @@ function FirefoxWrap() {
 	Stdlib.removeVectorMask(docRef, reflectionLayer);
 	makeRCrectangle( 2, 2, toNumber(docRef.height)-2, toNumber(docRef.width)-2, 6 );
 	Stdlib.createVectorMaskFromCurrentPath(docRef, reflectionLayer);
+
 	// Move "Top Right" corner to the right
 	var topRightGroup = wrapRoot.layerSets.getByName('Top Right');
 	var bounds = Stdlib.getLayerBounds(docRef, topRightGroup);
-	var dX = toNumber(docRef.width) - bounds[2] ;
+	var dX = toNumber(docRef.width) - bounds[2] - 2; // 2px for black and white borders
 	topRightGroup.translate(dX, 0);
 
 	// Stretching left layer
