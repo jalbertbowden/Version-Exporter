@@ -57,15 +57,15 @@ function ui_settingsDialog(exportInfo) {
 				}, \
 				grpWindowTitle: Group { \
 					label: StaticText { text: '"+ escapeString(strWindowTitle) +"', preferredSize: [ 120, 15 ] }, \
-					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_windowTitle) +"', preferredSize: [ 370, 21 ] }, \
+					field: EditText { text: '"+ escapeString(exportInfo.Wrapper.windowTitle) +"', preferredSize: [ 370, 21 ] }, \
 				}, \
 				grpWindowURL: Group { \
 					label: StaticText { text: '"+ escapeString(strWindowURL) +"', preferredSize: [ 120, 15 ] }, \
-					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_windowURL) +"', preferredSize: [ 370, 21 ] }, \
+					field: EditText { text: '"+ escapeString(exportInfo.Wrapper.url) +"', preferredSize: [ 370, 21 ] }, \
 				}, \
 				grpBackgroundColor: Group { \
 					label: StaticText { text: '"+ escapeString(strBackgroundColor) +"', preferredSize: [ 120, 15 ] }, \
-					field: EditText { text: '"+ escapeString(exportInfo.safariWrap_backgroundColor) +"', preferredSize: [ 370, 21 ] }, \
+					field: EditText { text: '"+ escapeString(exportInfo.Wrapper.backgroundColor) +"', preferredSize: [ 370, 21 ] }, \
 				}, \
 			}, \
 			pnlExportSettings: Panel { \

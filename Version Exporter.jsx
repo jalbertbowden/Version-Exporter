@@ -204,21 +204,31 @@ function main_init(exportInfo) {
 
 	// Override Settings by config
 	if ( documentConfig ) {
+
+		// Check if there is export configuration
 		if (!documentConfig.exportInfo) {
 			Log.notice("Configuration file does not contain \"exportInfo\" section, keeping defaults");
 			return;
 		}
-		if (setting == "destination") {
-			var destination = documentConfig.exportInfo[setting];
-			var currentDocumentPath = Folder(origDocRef.fullName.parent).fsName;
-			var absoluteDestination = Url.getAbsolute(currentDocumentPath, destination);
-			exportInfo.destination = absoluteDestination;
-			Log.notice('Destination in configuration: ' + destination );
-			Log.notice('Destination is set to absolute path: ' + absoluteDestination);
-		} else {
-			exportInfo[setting] = documentConfig.exportInfo[setting];
-			Log.notice( 'Setting "'+setting+'" set to: ' + documentConfig.exportInfo[setting] );
+
+		// Get absolute destination from configuration
+		try {
+			var destination = documentConfig.exportInfo.destination;
+			if (isGiven(destination)) {
+				var currentDocumentPath = Folder(origDocRef.fullName.parent).fsName;
+				var absoluteDestination = Url.getAbsolute(currentDocumentPath, destination);
+				exportInfo.destination = absoluteDestination;
+				Log.notice('Destination in configuration: ' + destination );
+				Log.notice('Destination is set to absolute path: ' + absoluteDestination);
+			}
+		} catch(e){
+			Log.warning('Could not get absolute destination from configuration: ' + e);
 		}
+
+		// Copy document config to exportInfo
+		MergeObjectsRecursive(exportInfo, documentConfig);
+
+
 	}
 
 	// Disable export selected for batch operations

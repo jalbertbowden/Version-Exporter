@@ -138,6 +138,13 @@ function config_getCurrentDocConfig(doc){
 		Log.warning('Found deprecated "SafariWrap" settings, copied to "Wrapper" settings');
 	}
 
+	// Safari Wrap: Backwards compatibility
+	try {
+		if (documentConfig.exportInfo.safariWrap){
+			documentConfig.Wrapper.mode = 1;
+		}
+	} catch(e){}
+
 	return documentConfig;
 
 }
