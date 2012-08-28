@@ -30,7 +30,7 @@ Manual Approach
 Version Exporter Approach
 -------------------------
 
-You may create a couple Layer Comps — one for the default screen view, and one for the view with the dropdown. 
+You may create a couple Layer Comps — one for the default screen view, and one for the view with the dropdown.
 
 *or*
 
@@ -92,12 +92,12 @@ Version Exporter works in a copy of the document, so there is no way it can infl
 
 * The folders will be "merged" with the Background folder only if there is one.
 * If there is a Background _layer_ it will be treated as a background folder. The layer is considered background if it is actually set as a background layer for the document or if its name is "Background".
-* Every stand alone layer in the root of the document will be treated as a separate version and will be exported as if it was a folder containing only this particular layer. 
+* Every stand alone layer in the root of the document will be treated as a separate version and will be exported as if it was a folder containing only this particular layer.
 
 Excluding
 ---------
 
-You can easily exclude folders from export. Assign gray color to a folder to tell Version Exporter to ignore it. Only the color of the root level folder matters. Color on the contained layers and folders don't.
+You can easily exclude folders from export. Assign gray color to a folder to tell Version Exporter to ignore it. Only the color of the root level folder matters. Color on the contained layers and folders doesn't.
 
 This won't affect Background folder, as it doesn't get exported as a single version.
 
@@ -116,7 +116,7 @@ Smart Folders allow you to combine different folders and export it as a separate
 
 ![Smart Folders](https://img.skitch.com/20120509-j3m54nsm6uxmt5eajpt3guwt48.png)
 
-Tell Version Exporter the folder needs to be treated as Smart Folder by assigning violet color to it. Basic idea of the Smart Folders is that every layer inside them is considered a reference to another layer or folder anywhere in the document. 
+Tell Version Exporter the folder needs to be treated as Smart Folder by assigning violet color to it. Basic idea of the Smart Folders is that every layer inside them is considered a reference to another layer or folder anywhere in the document.
 
 ![Smart Folders Explained](http://f.cl.ly/items/0402420j1f401F3T0r1K/smart_folders_explained.png)
 
@@ -129,7 +129,7 @@ You can reference a Smart Folder into another Smart Folder. But in that case onl
 Action Layers
 -------------
 
-Sometimes I had a situation when I needed to place several screens with different content in the same document. And not always that content would have the same length. Further more the difference in the length of the content is oftentimes quite noticeable. It results in quite high screens containing mostly blank space after the footer. 
+Sometimes I had a situation when I needed to place several screens with different content in the same document. And not always that content would have the same length. Further more the difference in the length of the content is oftentimes quite noticeable. It results in quite high screens containing mostly blank space after the footer.
 
 So I made Action Layers. Layer will be treated as an Action Layer if it is found directly inside the Smart Folder and has the blue color assigned to it.
 
@@ -145,11 +145,11 @@ Syntax for the "crop" action is
 
 So if you want to crop out of you large document a smaller image which is 500px wide and 200px tall starting the crop from the left top corner.
 
-	crop 0,0,500,200 
+	crop 0,0,500,200
 
 All 4 parameters may have value `w` or `h` which are the place holders for the width and height of the document respectively. So If you want to crop starting at top left and ending at 1000px vertically having the width uncropped, you need to name the Action Layer
 
-	crop 0,0,w,1000 
+	crop 0,0,w,1000
 
 You may also create an action layer and fill a certain area in it with a plain color. The color doesn't matter. Document will be cropped to the filled area. This layer can stay hidden all the time, and has to be named as follows:
 
@@ -163,9 +163,9 @@ _Still needs to be documented_
 
 ![Safari Wrap](https://img.skitch.com/20120510-d439gwbxntdetkgw4fqy879xpp.png)
 
-In short it wraps the image with Safari window. The resulting screen looks about 100% the same as the screenshot you would capture from original Mac OS (Lion). 
+In short it wraps the image with Safari window. The resulting screen looks about 100% the same as the screenshot you would capture from original Mac OS (Lion).
 
-The window gets adjusted to the size of the source image automatically. The screen includes shadow, rounded corners, custom window title and custom URL. If you save it as a PNG or PSD file the transparency of the shadow remains. If you choose another format, you may specify the color of the background behind the window. 
+The window gets adjusted to the size of the source image automatically. The screen includes shadow, rounded corners, custom window title and custom URL. If you save it as a PNG or PSD file the transparency of the shadow remains. If you choose another format, you may specify the color of the background behind the window.
 
 
 Project Configuration
@@ -397,7 +397,7 @@ If you want to extend a default configuration, you should name the default one `
 	]
 
 
-So where to store the configuration? You have two options. 
+So where to store the configuration? You have two options.
 
 1. You create a single configuration file, name it `Project.conf` and place in the same folder as your PSDs are in.
 2. You go centeralized way.
@@ -436,13 +436,13 @@ So here is a live example. Say, you work on a mac, and on a PC. You have you pro
 
 	/Users/me/Work/Projects/Sample Project/PSD (Mac)
 	D:\Projects\Sample Project\PSD (Windows)
-	
+
 	foo.psd
 	bar.psd
 
 	/Users/me/Projects.conf (Mac)
 	C:\Users\me\Projects.conf (Windows)
-	
+
 	[
 		{
 			"project": "Sample Project",
