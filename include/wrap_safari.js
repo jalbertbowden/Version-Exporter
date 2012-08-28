@@ -107,7 +107,7 @@ function SafariWrap () {
 
 	// Add shadow
 	Stdlib.pasteStyles( docRef, windowLayer, true );
-	makeRCrectangle( 0, 0, docRef.height.value, docRef.width.value, 0 );
+	makeRCrectangle( 0, 0, docRef.height.value, docRef.width.value, 5 );
 	Stdlib.createVectorMaskFromCurrentPath(docRef, windowLayer);
 	Stdlib.rasterizeVectorMask(docRef, windowLayer);
 	Stdlib.applyLayerMask(docRef, windowLayer);
