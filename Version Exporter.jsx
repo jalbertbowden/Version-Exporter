@@ -65,6 +65,9 @@ function main(){
 		}
 	}
 
+	// Save settings in the PSD upon start
+	main_saveSettings();
+
 	// Start processing
 	switch (exportInfo.operationMode) {
 		case 0:
@@ -100,24 +103,6 @@ function main_cancel(){
 ///////////////////////////////////////////////////////////////////////////////
 function main_finish( msg ){
 
-	// Save options in the PSD
-	var instructions = String(origDocRef.info.instructions);
-	var originalInstructions = String(instructions.split(INSTRUCTIONS_SPLIT_TOKEN).shift()).trim();
-	var newInstructionsArray = new Array();
-	newInstructionsArray.push(originalInstructions);
-
-	// Generate JSON
-	var savedSettingsString = JSON.stringify(exportInfo);
-	if ( savedSettingsString ) {
-		Log.notice('Saving settings in METADATA: ' + savedSettingsString);
-		newInstructionsArray.push(INSTRUCTIONS_SPLIT_TOKEN);
-		newInstructionsArray.push(savedSettingsString);
-	}
-
-	// Save into the instuction field
-	var newInstructionsString = newInstructionsArray.join("\n\n");
-	origDocRef.info.instructions = newInstructionsString;
-
 	// Message for the user
 	var defaultMessage = "Export is finished";
 	var finishMessage = ( msg != undefined ) ? defaultMessage + ": " + String(msg) : defaultMessage;
@@ -127,6 +112,36 @@ function main_finish( msg ){
 	if ( app.playbackDisplayDialogs != DialogModes.NO ) {
 		alert(finishMessage);
 	}
+
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Function:	main_finish
+// Usage:		returns to previusly saved hostory snapshot
+// Input:		none
+// Return:		none
+///////////////////////////////////////////////////////////////////////////////
+function main_saveSettings(){
+
+	// Save options in the PSD
+	var instructionsArray = String(origDocRef.info.instructions).split(INSTRUCTIONS_SPLIT_TOKEN);
+	var originalInstructions = String(instructionsArray[0]).trim();
+	var originalSavedSettings = String(instructionsArray[1]).trim();
+
+	// Generate JSON
+	var newSettingsString = JSON.stringify(exportInfo);
+
+	// If nothing is changed, don't update the file
+	if ( newSettingsString == originalSavedSettings || !newSettingsString ) return;
+
+	Log.notice('Saving settings in METADATA: ' + newSettingsString);
+	var newInstructionsArray = new Array();
+	newInstructionsArray.push(originalInstructions);
+	newInstructionsArray.push(INSTRUCTIONS_SPLIT_TOKEN);
+	newInstructionsArray.push(newSettingsString);
+	var newInstructionsString = newInstructionsArray.join("\n\n");
+	origDocRef.info.instructions = newInstructionsString;
 
 }
 
