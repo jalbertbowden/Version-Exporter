@@ -126,7 +126,7 @@ Document Setup: Layer Set Approach
 Basic Export *(draft)*
 --------------------
 
-![Basic Functionality](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Comps%20Actions.png)
+![Basic Functionality](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Layer%20Sets%20Smart%20Folders.png)
 
 Version Exporter works in a copy of the document, so there is no way it can influence you source document. Additional information on that see in chapter Document Setup: Layer Comps Approach.
 
