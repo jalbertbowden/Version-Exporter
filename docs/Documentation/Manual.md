@@ -77,6 +77,48 @@ Document Setup: Layer Comps Approach *(draft)*
 
 _Still needs to be documented_
 
+Basic Export *(draft)*
+--------------------
+The basic functionality is pretty similar to the famous "Layer Comps to Layers". Version Exporter cycles through your comps and saves each comp as separate file.
+
+Version Exporter works in a copy of the document, so there is no way it can influence you source document. Except for writing down the settings you choose into the "instructions" metadata field of the document. The original contents of the field remains untouched. If settings were not actually changed, the original document won't be changed, so you don't loose the "saved" state.
+
+Excluding Comps
+--------------------
+_Not implemented yet_
+
+Actions *(draft)*
+-----------------
+
+Actions are basically the additional export parameters you can add to each particular version. The actions are added to the comment field of the comp. To differ the actions from any other content of the comment field, an `@` symbol is added as the first character of the line. So if the line starts with the `@`, it is treated as an action.
+
+Having in mind that there might be quite a number of actions, I must say that now there is only one :) it is "crop". The syntax is dead simple.
+
+	@function params
+
+Syntax for the "crop" action is
+
+	@crop startX,startY,endX,endY
+
+So if you want to crop out of you large document a smaller image which is 500px wide and 200px tall starting the crop from the left top corner.
+
+	@crop 0,0,500,200
+
+All 4 parameters may have value `w` or `h` which are the place holders for the width and height of the document respectively. So If you want to crop starting at top left and ending at 1000px vertically having the width uncropped, you need to name the Action Layer
+
+	@crop 0,0,w,1000
+
+You may also crop by a certain area. Create a layer, give it any name, say, `Crop Layer`, and fill some area with color. Now give a comp the following comment:
+
+	@crop area Crop Area
+
+This action will crop everything inside the bounding box of the `Crop Layer`. The visibility of the layer doesn't matter. It may even reside in nested layer sets. In this case just use the URL style path:
+
+	@crop area Service/Crops/Crop Viewport
+	
+Where `Service` is a name of the layer set, `Crops` is a layerset inside `Service` and `Crop Viewport` is an actual layer with filled area:
+
+![Layer Comps Actions](http://img.skitch.com/20120829-dy9fmgfg7ak3dy261rsps7phkd.png)
 
 Document Setup: Layer Set Approach
 ==================================
@@ -86,7 +128,7 @@ Basic Export *(draft)*
 
 ![Basic Functionality](https://img.skitch.com/20120509-pqqpgs9555781b4kuiwf1b1pup.png)
 
-Version Exporter works in a copy of the document, so there is no way it can influence you source document.
+Version Exporter works in a copy of the document, so there is no way it can influence you source document. Additional information on that see in chapter Document Setup: Layer Comps Approach.
 
 ### Special cases
 
