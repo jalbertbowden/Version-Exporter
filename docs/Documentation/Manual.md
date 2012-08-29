@@ -72,7 +72,7 @@ To run Version Exporter
 
 You might also want to record an action for that and provide it with a shortcut key for a fast access.
 
-Document Setup: Layer Comps Approach *(draft)*
+Document Setu based on Layer Comps *(draft)*
 ====================================
 
 _Still needs to be documented_
@@ -120,7 +120,7 @@ Where `Service` is a name of the layer set, `Crops` is a layerset inside `Servic
 
 ![Layer Comps Actions](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Comps%20Actions.png)
 
-Document Setup: Layer Set Approach
+Document Setup based on Layer Sets
 ==================================
 
 Basic Export *(draft)*
