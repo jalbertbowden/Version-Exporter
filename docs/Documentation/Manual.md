@@ -5,7 +5,7 @@ Version Exporter is a JavaScript application for Adobe Photoshop with general pu
 
 It is an advanced version of familiar 'Layers to Files' and 'Comps to Files' scripts from the original Photoshop package.
 
-![Main Window](https://img.skitch.com/20120510-kjt5mdw4ydrsatmdbmybrehbf6.png)
+![Main Window](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Main%20Window.png)
 
 Real Life Example
 -----------------
@@ -115,10 +115,10 @@ You may also crop by a certain area. Create a layer, give it any name, say, `Cro
 This action will crop everything inside the bounding box of the `Crop Layer`. The visibility of the layer doesn't matter. It may even reside in nested layer sets. In this case just use the URL style path:
 
 	@crop area Service/Crops/Crop Viewport
-	
+
 Where `Service` is a name of the layer set, `Crops` is a layerset inside `Service` and `Crop Viewport` is an actual layer with filled area:
 
-![Layer Comps Actions](http://img.skitch.com/20120829-dy9fmgfg7ak3dy261rsps7phkd.png)
+![Layer Comps Actions](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Comps%20Actions.png)
 
 Document Setup: Layer Set Approach
 ==================================
@@ -126,7 +126,7 @@ Document Setup: Layer Set Approach
 Basic Export *(draft)*
 --------------------
 
-![Basic Functionality](https://img.skitch.com/20120509-pqqpgs9555781b4kuiwf1b1pup.png)
+![Basic Functionality](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Comps%20Actions.png)
 
 Version Exporter works in a copy of the document, so there is no way it can influence you source document. Additional information on that see in chapter Document Setup: Layer Comps Approach.
 
@@ -145,7 +145,7 @@ This won't affect Background folder, as it doesn't get exported as a single vers
 
 Ignoring folders will affect the numbering of the files. The number of the file increments only for the actually exported images.
 
-![Disabled Folder](https://img.skitch.com/20120509-ch76efrk71856knq17hc1ktrdm.png)
+![Disabled Folder](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Layer%20Sets%20Disable.png)
 
 Smart Folders *(draft)*
 ------------
@@ -156,11 +156,11 @@ Smart Folders allow you to combine different folders and export it as a separate
 * you want alternative background for some versions
 * you want some modifications for some versions (see Action Layers section)
 
-![Smart Folders](https://img.skitch.com/20120509-j3m54nsm6uxmt5eajpt3guwt48.png)
+![Smart Folders](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Layer%20Sets%20Smart%20Folders%202.png)
 
 Tell Version Exporter the folder needs to be treated as Smart Folder by assigning violet color to it. Basic idea of the Smart Folders is that every layer inside them is considered a reference to another layer or folder anywhere in the document.
 
-![Smart Folders Explained](http://f.cl.ly/items/0402420j1f401F3T0r1K/smart_folders_explained.png)
+![Smart Folders Explained](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Layer%20Sets%20References.png)
 
 The content of the reference layers doesn't matter as the layers will be replaced by the referenced folder. The "URL" to the reference is the name of the reference layer. You can even use nested layers or folders by using a `/` in the reference.
 
@@ -175,7 +175,7 @@ Sometimes I had a situation when I needed to place several screens with differen
 
 So I made Action Layers. Layer will be treated as an Action Layer if it is found directly inside the Smart Folder and has the blue color assigned to it.
 
-![Action Layers](http://f.cl.ly/items/1k2C3Q2c0J2S392T3c03/action_layers.png)
+![Action Layers](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Layer%20Sets%20Actions.png)
 
 Having in mind that there might be quite a number of actions, I must say that now there is only one :) it is "crop". The syntax is dead simple.
 
@@ -203,7 +203,7 @@ Safari Wrap *(draft)*
 
 _Still needs to be documented_
 
-![Safari Wrap](https://img.skitch.com/20120510-d439gwbxntdetkgw4fqy879xpp.png)
+![Safari Wrap](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Wrap%20Safari.png)
 
 In short it wraps the image with Safari window. The resulting screen looks about 100% the same as the screenshot you would capture from original Mac OS (Lion).
 

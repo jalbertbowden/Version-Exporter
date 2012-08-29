@@ -1,7 +1,7 @@
 Version Exporter
 ================
 
-![Main Window](https://img.skitch.com/20120510-kjt5mdw4ydrsatmdbmybrehbf6.png)
+![Main Window](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Main%20Window.png)
 
 Version Exporter is a JavaScript application for Adobe Photoshop with general purpose to provide a workflow for exporting different views or versions of a single Photoshop document.
 
