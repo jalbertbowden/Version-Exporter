@@ -223,7 +223,10 @@ function Wrapper ( docRef ) {
 		}
 
 		docRef.artLayers.add();
-		Stdlib.mergeVisible(docRef);
+
+		// Merge Visible
+		//Stdlib.mergeVisible(docRef);
+		executeAction( charIDToTypeID( "MrgV" ), undefined, DialogModes.NO );
 
 	}
 

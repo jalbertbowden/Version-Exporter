@@ -53,26 +53,6 @@ function export_version( versionName ){
 		}
 	}
 
-	// Safri Wrap
-	// if (exportInfo.safariWrap) {
-	// 	try {
-	// 		Log.notice( 'Try to use Safari Wrap on file: ' + Url.getAbsolute(savedFile) );
-	// 		// Reopen saved file
-	// 		var safariWrapDocument = app.open(savedFile);
-	// 		// Execute the action
-	// 		SafariWrap( safariWrapDocument );
-	// 		// Flatten only if this is JPG, otherweise it will ask for path to save
-	// 		var ext = savedFile.strf('%e').toUpperCase();
-	// 		if (ext == 'JPG') safariWrapDocument.flatten();
-	// 		// Close with saving changes
-	// 		safariWrapDocument.close(SaveOptions.SAVECHANGES);
-
-	// 	} catch(e){
-	// 		Log.error('Something went wrong with Safari Wrap, turning it off for this export sessions', e);
-	// 		exportInfo.safariWrap = false;
-	// 	}
-	// }
-
 	// Increase version number
 	versionNumber++;
 }
