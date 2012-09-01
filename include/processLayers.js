@@ -107,6 +107,7 @@ function processLayers() {
 				// Export version
 				export_version(currentLayerSet.name);
 				// Revert is needed after actions, trimming and stuff
+				app.activeDocument = docRef; // fix for CS5
 				Stdlib.revertToLastSnapshot(docRef);
 				// Hide current layer
 				currentLayerSet.visible = false;
@@ -141,6 +142,7 @@ function processLayers() {
 				export_version(currentLayerSet.name);
 
 				// Revert is needed when trimming
+				app.activeDocument = docRef; // fix for CS5
 				Stdlib.revertToLastSnapshot(docRef);
 
 				// Hide current layer
