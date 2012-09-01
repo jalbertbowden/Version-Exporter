@@ -523,13 +523,12 @@ System Requirements
 
 Mac or PC and Adobe Photoshop CS4 or higher.
 
-Safari Wrap works only on CS4 for now. I'm working on that.
-
 Tested on:
 
 - PC, Windows 7, Intel Core i5-2400 CPU @ 3.10GHz, 8 GB, Adobe Photoshop CS4
 - Mac, Intel Core i5 @ 3.2GHz, 4GB, Adobe Photoshop CS4
-- Mac, Intel Core i5 @ 3.2GHz, 8GB, Adobe Photoshop CS4
+- Mac, Intel Core i5 @ 3.2GHz, 12GB, Adobe Photoshop CS4
+- Mac, Intel Core i5 @ 3.2GHz, 12GB, Adobe Photoshop CS5
 - Mac, Intel Core 2 Duo @ 2.4GHz, 4GB, Adobe Photoshop CS4
 - Mac, Intel Core 2 Duo @ 2.4GHz, 8GB, Adobe Photoshop CS4
 
