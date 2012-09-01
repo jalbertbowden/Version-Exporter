@@ -22,7 +22,7 @@
 //@include 'include/div.js'
 //@include 'include/log.js'
 
-//@include 'include/wrap_safari.js'
+//@include 'include/wrap_firefox.js'
 
 // Dispatch
 main();
@@ -55,7 +55,7 @@ function main(){
 	Log.notice('Finished initialising settings');
 
 	//var docRef = origDocRef.duplicate();
-	SafariWrap(origDocRef);
+	FirefoxWrap(origDocRef);
 
 }
 
@@ -79,6 +79,10 @@ function main_cancel(){
 // Return:		none
 ///////////////////////////////////////////////////////////////////////////////
 function main_finish(){
+
+	// Save options
+	var d = objectToDescriptor(exportInfo, strMessage, preProcessExportInfo);
+	app.putCustomOptions(SCRIPT_REGISTRY_ID, d);
 
 	Log.notice('Export is finished');
 	if ( app.playbackDisplayDialogs != DialogModes.NO ) {
