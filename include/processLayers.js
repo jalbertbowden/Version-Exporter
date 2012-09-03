@@ -62,6 +62,9 @@ function processLayers() {
 		// Define current layerSet
 		var currentLayerSet = layerSets[i];
 
+		// Skipping if the name starts with ~ or #
+		if ( String(currentLayerSet.name).startsWith('#') || String(currentLayerSet.name).startsWith('~') ) continue;
+
 		// Skip Background
 		if ( currentLayerSet == backgroundLayerSet ) continue;
 

@@ -45,6 +45,9 @@ function processComps() {
 
 		var currentComp = comps[i];
 
+		// Skipping if the name starts with ~ or #
+		if ( String(currentComp.name).startsWith('#') || String(currentComp.name).startsWith('~') ) continue;
+
 		// Selected only
 		if (exportInfo.exportSelected && !currentComp.selected) {
 			versionNumber++;
