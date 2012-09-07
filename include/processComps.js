@@ -78,6 +78,7 @@ function processComps() {
 		export_version(currentComp.name);
 
 		// Revert is needed after actions, trimming and stuff
+		app.activeDocument = docRef; // fix for CS5
 		Stdlib.revertToLastSnapshot(docRef);
 
 	}
