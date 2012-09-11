@@ -21,6 +21,7 @@ var ACTIONLAYERCOLOR                    = "blue";
 var BACKGROUNDLAYERSETNAME              = "Background";
 var SCRIPT_REGISTRY_ID                  = "yasoNEijdaP74gRLAeNpUiTr6m"
 var INSTRUCTIONS_SPLIT_TOKEN            = "### VERSION EXPORTER DATA ###";
+var XML_SETTINGS_NAME                   = "VersionExporterSettings";
 var HOME                                = "~/Pro Actions";
 
 // logging

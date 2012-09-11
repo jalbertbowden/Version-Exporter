@@ -24,7 +24,6 @@
 //@include 'include/div.js'
 //@include 'include/trimmer.js'
 //@include 'include/log.js'
-//@include 'include/json2.js'
 //@include 'include/getSelectedLayers.js'
 //@include 'include/wrapper.js'
 
@@ -124,24 +123,33 @@ function main_finish( msg ){
 ///////////////////////////////////////////////////////////////////////////////
 function main_saveSettings(){
 
-	// Save options in the PSD
+	// Remove old style saved settings from instructions field
 	var instructionsArray = String(origDocRef.info.instructions).split(INSTRUCTIONS_SPLIT_TOKEN);
 	var originalInstructions = String(instructionsArray[0]).trim();
-	var originalSavedSettings = String(instructionsArray[1]).trim();
 
-	// Generate JSON
-	var newSettingsString = JSON.stringify(exportInfo);
+	// If there are no settings saved - skip it
+	if ( origDocRef.info.instructions != originalInstructions ) {
+		origDocRef.info.instructions = originalInstructions;
+		Log.notice('Removed old style settings from the instructions field. Current content of the instructions field: ' + originalInstructions);
+	}
 
-	// If nothing is changed, don't update the file
-	if ( newSettingsString == originalSavedSettings || !newSettingsString ) return;
+	// Lod the XMP library
+	if (ExternalObject.AdobeXMPScript == undefined) ExternalObject.AdobeXMPScript = new ExternalObject("lib:AdobeXMPScript");
 
-	Log.notice('Saving settings in METADATA: ' + newSettingsString);
-	var newInstructionsArray = new Array();
-	newInstructionsArray.push(originalInstructions);
-	newInstructionsArray.push(INSTRUCTIONS_SPLIT_TOKEN);
-	newInstructionsArray.push(newSettingsString);
-	var newInstructionsString = newInstructionsArray.join("\n\n");
-	origDocRef.info.instructions = newInstructionsString;
+	// Get the actually saved settings
+	var xmp = new XMPMeta( app.activeDocument.xmpMetadata.rawData );
+	var originalSettings = xmp.getProperty(XMPConst.NS_XMP, XML_SETTINGS_NAME);
+	var newSettingsSerialized = exportInfo.toSource();
+
+	// If nothing is changed, do not update
+	if ( originalSettings == newSettingsSerialized ) {
+		Log.notice('Settings were not updated. XMP metadata remains untouched.');
+		return;
+	}
+
+	Log.notice('Saving settings in XMP metadata: ' + newSettingsSerialized);
+	xmp.setProperty(XMPConst.NS_XMP, XML_SETTINGS_NAME, newSettingsSerialized);
+	app.activeDocument.xmpMetadata.rawData = xmp.serialize();
 
 }
 
@@ -186,16 +194,27 @@ function main_init(exportInfo) {
 		exportInfo.fileNamePrefix = app.activeDocument.name; // filename body part
 	}
 
-	// Get saved settings for this particular PSD
-	var splitToken = INSTRUCTIONS_SPLIT_TOKEN;
-	var instructions = String(origDocRef.info.instructions);
-	var parts = instructions.split(splitToken);
-	var originalInstructions = String(parts[0]).trim();
-	var savedSettingsString = String(parts[1]).trim();
+	// Get settings from XMP
+
+	// Lod the XMP library
+	if (ExternalObject.AdobeXMPScript == undefined) ExternalObject.AdobeXMPScript = new ExternalObject("lib:AdobeXMPScript");
+	var xmp = new XMPMeta( app.activeDocument.xmpMetadata.rawData );
+	var savedSttingsString = String(xmp.getProperty(XMPConst.NS_XMP, XML_SETTINGS_NAME));
+
+	// If there are no settings there, try the old style
+	if ( savedSttingsString == "undefined" || savedSttingsString == "" ) {
+		var splitToken = INSTRUCTIONS_SPLIT_TOKEN;
+		var instructions = String(origDocRef.info.instructions);
+		var parts = instructions.split(splitToken);
+		var originalInstructions = String(parts[0]).trim();
+		var savedSettingsString = String(parts[1]).trim();
+	}
+
 	var savedSettings = {};
-	if ( savedSettingsString != "undefined" ) {
-		Log.notice('Settings saved in METADATA: ' + savedSettingsString);
-		savedSettings = JSON.parse(savedSettingsString);
+
+	if ( savedSettingsString != "undefined" && savedSettingsString != "" ) {
+		Log.notice('Got settings saved in : ' + savedSettingsString);
+		savedSettings = eval('(' + savedSettingsString + ')');
 		MergeObjectsRecursive(exportInfo, savedSettings);
 	}
 
