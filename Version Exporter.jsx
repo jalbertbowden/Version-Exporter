@@ -199,10 +199,10 @@ function main_init(exportInfo) {
 	// Lod the XMP library
 	if (ExternalObject.AdobeXMPScript == undefined) ExternalObject.AdobeXMPScript = new ExternalObject("lib:AdobeXMPScript");
 	var xmp = new XMPMeta( app.activeDocument.xmpMetadata.rawData );
-	var savedSttingsString = String(xmp.getProperty(XMPConst.NS_XMP, XML_SETTINGS_NAME));
+	var savedSettingsString = String(xmp.getProperty(XMPConst.NS_XMP, XML_SETTINGS_NAME));
 
 	// If there are no settings there, try the old style
-	if ( savedSttingsString == "undefined" || savedSttingsString == "" ) {
+	if ( savedSettingsString == "undefined" || savedSettingsString == "" ) {
 		var splitToken = INSTRUCTIONS_SPLIT_TOKEN;
 		var instructions = String(origDocRef.info.instructions);
 		var parts = instructions.split(splitToken);
@@ -214,6 +214,7 @@ function main_init(exportInfo) {
 
 	if ( savedSettingsString != "undefined" && savedSettingsString != "" ) {
 		Log.notice('Got settings saved in : ' + savedSettingsString);
+
 		savedSettings = eval('(' + savedSettingsString + ')');
 		MergeObjectsRecursive(exportInfo, savedSettings);
 	}
