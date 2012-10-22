@@ -34,7 +34,7 @@ function SafariWrap () {
 	var headerFile = new File(settings.sourcesPath + '/safari.psd');
 	if (!headerFile.exists) throw(new Error("Slice file " + headerFile + " wasn't found"));
 	var headerDoc = app.open(headerFile);
-	var headerHeight = headerDoc.height;
+	var headerHeight = parseInt(getUnitValue(headerDoc.height));
 
 	// Save position of the URL layer
 	var URLLayerBounds = Stdlib.getLayerBounds(headerDoc, headerDoc.artLayers.getByName('URL'));
@@ -63,6 +63,7 @@ function SafariWrap () {
 	executeAction( charIDToTypeID( "CpTL" ), undefined, DialogModes.NO );
 	var stretchLayer = headerDoc.activeLayer;
 	var stretchLayerBounds = Stdlib.getLayerBounds(headerDoc, stretchLayer);
+
 	// Strech it
 	Stdlib.transformLayer(headerDoc, stretchLayer, [stretchLayerBounds[0], stretchLayerBounds[1], rightLayerBounds[0], rightLayerBounds[3]] );
 
@@ -99,7 +100,7 @@ function SafariWrap () {
 
 	// Paste header and align it
 	var headerLayer = docRef.paste();
-	Stdlib.transformLayer(docRef, headerLayer, [0, 0, toNumber(docRef.width), toNumber(headerHeight)]);
+	Stdlib.transformLayer(docRef, headerLayer, [0, 0, parseInt(getUnitValue(docRef.width)), toNumber(headerHeight)]);
 
 	Stdlib.mergeVisible(docRef);
 	var windowLayer = docRef.activeLayer;
@@ -107,7 +108,7 @@ function SafariWrap () {
 
 	// Add shadow
 	Stdlib.pasteStyles( docRef, windowLayer, true );
-	makeRCrectangle( 0, 0, docRef.height.value, docRef.width.value, 5 );
+	makeRCrectangle( 0, 0, parseInt(getUnitValue(docRef.height)), parseInt(getUnitValue(docRef.width)), 5 );
 	Stdlib.createVectorMaskFromCurrentPath(docRef, windowLayer);
 	Stdlib.rasterizeVectorMask(docRef, windowLayer);
 	Stdlib.applyLayerMask(docRef, windowLayer);
@@ -150,7 +151,7 @@ function SafariWrap () {
 		executeAction( idslct, desc83, DialogModes.NO );
 
 		// Remove border around the header
-		Stdlib.selectBounds(docRef, [0, 0, toNumber(docRef.width), toNumber(headerHeight)] );
+		Stdlib.selectBounds(docRef, [0, 0, parseInt(getUnitValue(docRef.width)), toNumber(headerHeight)] );
 		docRef.selection.clear();
 
 	}
