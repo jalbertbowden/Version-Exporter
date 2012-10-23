@@ -119,9 +119,10 @@ function ui_settingsDialog(exportInfo) {
 
 	// Adding operation modes
 	var operationModeDropdown = dlgMain.grpOperationMode.field;
-	for (var i = 0; i < operationModes.length; i++ ) {
-		var item = operationModeDropdown.add( "item", operationModes[i] );
-		if ( exportInfo.operationMode == i ) item.selected = true;
+	for (var i = 0; i < operationModesOrder.length; i++ ) {
+		var num = operationModesOrder[i];
+		var item = operationModeDropdown.add( "item", operationModes[num] );
+		if ( exportInfo.operationMode == num ) item.selected = true;
 	}
 
 	// Adding Wrapper Modes
@@ -164,7 +165,7 @@ function ui_settingsDialog(exportInfo) {
 	// Get settings from dialog
     exportInfo.destination                  = dlgMain.grpDestination.field.text;
     exportInfo.fileNamePrefix               = dlgMain.grpFilenamePrefix.field.text;
-    exportInfo.operationMode                = dlgMain.grpOperationMode.field.selection.index;
+    exportInfo.operationMode                = operationModesOrder[dlgMain.grpOperationMode.field.selection.index];
     exportInfo.exportSelected               = dlgMain.grpOptions.fieldExportSelected.value;
     exportInfo.trim                         = dlgMain.grpOptions.fieldTrim.value;
 

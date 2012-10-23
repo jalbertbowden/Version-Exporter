@@ -19,6 +19,7 @@
 //@include 'include/stdlib.js'
 //@include 'include/processLayers.js'
 //@include 'include/processComps.js'
+//@include 'include/processPlain.js'
 //@include 'include/export.js'
 //@include 'include/ui.js'
 //@include 'include/div.js'
@@ -76,6 +77,10 @@ function main(){
 		case 1:
 			Log.notice('Operation mode: Comps');
 			processComps();
+			break;
+		case 2:
+			Log.notice('Operation mode: Plain');
+			processPlain();
 			break;
 	}
 

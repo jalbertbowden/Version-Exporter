@@ -23,6 +23,7 @@ var SCRIPT_REGISTRY_ID                  = "yasoNEijdaP74gRLAeNpUiTr6m"
 var INSTRUCTIONS_SPLIT_TOKEN            = "### VERSION EXPORTER DATA ###";
 var XML_SETTINGS_NAME                   = "VersionExporterSettings";
 var HOME                                = "~/Pro Actions";
+var VERSION								= "1.1";
 
 // logging
 var LOG_FILE                            = HOME + '/Version Exporter/Logs/{document}_%Y-%m-%d_%H-%M-%S.log' // {document}, {loglevel}, +strftime
@@ -51,7 +52,9 @@ var fileTypes                           = [ 'JPG', 'PNG', 'PSD', 'TIFF' ];
 
 var strLabelLayerSets  			        = "Use Layer Sets as versions";
 var strLabelComps			            = "Use Comps as versions";
-var operationModes						= [ strLabelLayerSets, strLabelComps ];
+var strLabelPlain			            = "Export current document state";
+var operationModes						= [ strLabelLayerSets, strLabelComps, strLabelPlain ];
+var operationModesOrder					= [ 2, 1, 0 ];
 
 var strLabelWrapper						= "Wrapper";
 var strLabelWrapperMode					= "Wrapper Mode";
@@ -71,7 +74,7 @@ var runButtonID                         = 1;
 var cancelButtonID                      = 2;
 
 // UI strings to be localized
-var strTitle                            = "Versions Exporter"
+var strTitle                            = "Versions Exporter v."+VERSION;
 var strButtonRun                        = "Run"
 var strButtonCancel                     = "Cancel"
 var strButtonHelp                       = "Documentation"

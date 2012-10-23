@@ -25,8 +25,12 @@ function export_version( versionName ){
 
 	// Determine the filename
 	var fileNameBody = "";
-	if (exportInfo.fileNamePrefix) fileNameBody += exportInfo.fileNamePrefix + "_";
-	fileNameBody += zeroSuppress(versionNumber, 4) + "_" + String(versionName).trim();
+	if (exportInfo.fileNamePrefix) fileNameBody += exportInfo.fileNamePrefix;
+	if (versionName) fileNameBody += "_" + zeroSuppress(versionNumber, 4) + "_" + String(versionName).trim();
+
+	// No prefix and no versionName, user the original document title without extension
+	if (!fileNameBody) fileNameBody = docName.replace(/\.[^\.]+$/, "");
+
 	fileNameBody = fileNameBody.replace(/[:\/\\*\?\"\<\>\|]/g, "_");  // '/\:*?"<>|' -> '_'
 	fileNameBody = fileNameBody.replace(/_+/g, "_");  // '____' -> '_'
 	fileNameBody = fileNameBody.replace(/\-+/g, "-");  // '---' -> '-'
