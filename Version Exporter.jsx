@@ -201,7 +201,7 @@ function main_init(exportInfo) {
 
 	// Get settings from XMP
 
-	// Lod the XMP library
+	// Load the XMP library
 	if (ExternalObject.AdobeXMPScript == undefined) ExternalObject.AdobeXMPScript = new ExternalObject("lib:AdobeXMPScript");
 	var xmp = new XMPMeta( app.activeDocument.xmpMetadata.rawData );
 	var savedSettingsString = String(xmp.getProperty(XMPConst.NS_XMP, XML_SETTINGS_NAME));

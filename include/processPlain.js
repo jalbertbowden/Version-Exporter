@@ -25,6 +25,13 @@ function processPlain() {
 	// Work with duplicate
 	docRef = origDocRef.duplicate();
 
+	// Trim document
+	try {
+		if (exportInfo.trim) {
+			trimmer(docRef);
+		}
+	} catch(e) {}
+
 	// Export version
 	export_version("");
 
