@@ -101,6 +101,11 @@ function processComps() {
 				docRef.flatten();
 				break;
 
+			// Faltten Image
+			case "mergeVisible":
+				//docRef.flatten();
+				break;
+
 			// Crop
 			case "crop":
 
@@ -131,7 +136,8 @@ function processComps() {
 				}
 
 				// Do crop
-				docRef.flatten();
+				Stdlib.mergeVisible(docRef);
+				// docRef.flatten();
 				Stdlib.cropBounds(docRef, bounds);
 				break;
 
