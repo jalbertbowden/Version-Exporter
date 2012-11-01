@@ -135,9 +135,13 @@ function processComps() {
 					}
 				}
 
-				// Do crop
+				// We add a new layer to make it selected
+				// Because if the selection will be on an invisible layer
+				// the merge visible function will be unavailable
+				docRef.artLayers.add();
 				Stdlib.mergeVisible(docRef);
-				// docRef.flatten();
+
+				// crop
 				Stdlib.cropBounds(docRef, bounds);
 				break;
 
