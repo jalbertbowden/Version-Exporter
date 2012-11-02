@@ -87,7 +87,7 @@ function Wrapper ( docRef ) {
 		settings.backgroundColor = app.backgroundColor;
 		//settings.backgroundColor = hexToRGBColor("#999999");
 		settings.windowTitle = "Website.com";
-		settings.url = "http://www.website.com/";
+		settings.windowURL = "http://www.website.com/";
 		settings.transparentBackground = true;
 
 		var wrapperFolders = {
@@ -175,7 +175,7 @@ function Wrapper ( docRef ) {
 		// Version Exporter GUI
 		if (exportInfo) {
 			setParameter('windowTitle',				exportInfo.Wrapper.windowTitle, 				convertToString,	isGiven);
-			setParameter('url',						exportInfo.Wrapper.windowURL, 					convertToString, 	isGiven);
+			setParameter('windowURL',				exportInfo.Wrapper.windowURL, 					convertToString, 	isGiven);
 			setParameter('backgroundColor',			exportInfo.Wrapper.backgroundColor, 			hexToRGBColor,		isGiven);
 			setParameter('transparentBackground',	exportInfo.Wrapper.backgroundColor, 			toBoolean,			isGiven);
 			return settings;
@@ -183,7 +183,7 @@ function Wrapper ( docRef ) {
 
 		// Document Configuration
 		setParameter('windowTitle',				documentConfig.Wrapper.windowTitle, 				convertToString,	isGiven);
-		setParameter('url',						documentConfig.Wrapper.windowURL, 					convertToString, 	isGiven);
+		setParameter('windowURL',				documentConfig.Wrapper.windowURL, 					convertToString, 	isGiven);
 		setParameter('backgroundColor',			documentConfig.Wrapper.backgroundColor, 			hexToRGBColor,		isGiven);
 		setParameter('trim',					documentConfig.Wrapper.trim, 						toBoolean);
 		setParameter('transparentBackground',	documentConfig.Wrapper.transparentBackground, 		toBoolean);

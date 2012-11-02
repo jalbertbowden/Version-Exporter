@@ -19,7 +19,7 @@ function FirefoxWrap() {
 
 	// Get Window title and  URL
 	var windowTitle = settings.windowTitle;
-	var URL = settings.url;
+	var URL = settings.windowURL;
 
 	// Flatten the frame contents
 	executeAction(sTID('flattenImage'), undefined, dialogMode);
@@ -112,10 +112,10 @@ function FirefoxWrap() {
 	}
 
 	// Edit URL
-	if (settings.url) {
-		Log.notice('Safari Wrap: Setting URL: ' + settings.url );
+	if (settings.windowURL) {
+		Log.notice('Safari Wrap: Setting URL: ' + settings.windowURL );
 		var URLLayer = wrapRoot.artLayers.getByName('URL');
-		URLLayer.textItem.contents = settings.url;
+		URLLayer.textItem.contents = settings.windowURL;
 	}
 
 	// Move contents layer to to front

@@ -74,10 +74,10 @@ function SafariWrap () {
 	}
 
 	// Edit URL
-	if (settings.url) {
-		Log.notice('Safari Wrap: Setting URL: ' + settings.url );
+	if (settings.windowURL) {
+		Log.notice('Safari Wrap: Setting URL: ' + settings.windowURL );
 		var URLLayer = headerDoc.artLayers.getByName('URL');
-		URLLayer.textItem.contents = settings.url;
+		URLLayer.textItem.contents = settings.windowURL;
 	}
 
 	// Copy styles to clipboard

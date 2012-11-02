@@ -61,7 +61,7 @@ function ui_settingsDialog(exportInfo) {
 				}, \
 				grpWindowURL: Group { \
 					label: StaticText { text: '"+ escapeString(strWindowURL) +"', preferredSize: [ 120, 15 ] }, \
-					field: EditText { text: '"+ escapeString(exportInfo.Wrapper.url) +"', preferredSize: [ 370, 21 ] }, \
+					field: EditText { text: '"+ escapeString(exportInfo.Wrapper.windowURL) +"', preferredSize: [ 370, 21 ] }, \
 				}, \
 				grpBackgroundColor: Group { \
 					label: StaticText { text: '"+ escapeString(strBackgroundColor) +"', preferredSize: [ 120, 15 ] }, \
