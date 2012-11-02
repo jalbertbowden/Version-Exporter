@@ -152,7 +152,9 @@ function main_saveSettings(){
 		return;
 	}
 
-	Log.notice('Saving settings in XMP metadata: ' + newSettingsSerialized);
+	Log.notice('Serialized settings for XMP metadata: ' + newSettingsSerialized);
+	newSettingsSerialized = File.encode(newSettingsSerialized);
+	Log.notice('Encoded serialized settings for XMP metadata: ' + newSettingsSerialized);
 	xmp.setProperty(XMPConst.NS_XMP, XML_SETTINGS_NAME, newSettingsSerialized);
 	app.activeDocument.xmpMetadata.rawData = xmp.serialize();
 
@@ -180,13 +182,8 @@ function main_init(exportInfo) {
     exportInfo.Wrapper                      = {};
     exportInfo.Wrapper.mode                 = 0;
     exportInfo.Wrapper.windowTitle          = 'Website.com';
-    exportInfo.Wrapper.url                  = 'http://www.website.com';
+    exportInfo.Wrapper.windowURL            = 'http://www.website.com';
     exportInfo.Wrapper.backgroundColor      = '#444444'
-
-    // exportInfo.safariWrap                   = false;
-    // exportInfo.safariWrap_windowTitle       = 'Website.com';
-    // exportInfo.safariWrap_windowURL         = 'http://www.website.com';
-    // exportInfo.safariWrap_backgroundColor   = '#444444';
 
 	// Set default destination and filename prefix
 	try {
@@ -205,6 +202,7 @@ function main_init(exportInfo) {
 	if (ExternalObject.AdobeXMPScript == undefined) ExternalObject.AdobeXMPScript = new ExternalObject("lib:AdobeXMPScript");
 	var xmp = new XMPMeta( app.activeDocument.xmpMetadata.rawData );
 	var savedSettingsString = String(xmp.getProperty(XMPConst.NS_XMP, XML_SETTINGS_NAME));
+	savedSettingsString = File.decode(savedSettingsString);
 
 	// If there are no settings there, try the old style
 	if ( savedSettingsString == "undefined" || savedSettingsString == "" ) {
