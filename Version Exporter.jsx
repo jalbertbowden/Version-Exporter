@@ -60,7 +60,12 @@ function main(){
 
 	//Show the dialog
 	if ( app.playbackDisplayDialogs != DialogModes.NO ) {
-		if ( cancelButtonID == ui_settingsDialog(exportInfo) ) {
+		var returnButtonID = ui_settingsDialog(exportInfo);
+		if (returnButtonID == cancelButtonID) {
+			return main_cancel();
+		}
+		if (returnButtonID == saveButtonID) {
+			main_saveSettings();
 			return main_cancel();
 		}
 	}
@@ -162,7 +167,7 @@ function main_saveSettings(){
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Function: initExportInfo
+// Function: main_init
 // Usage: create our default parameters
 // Input: a new Object
 // Return: a new object with params set to default

@@ -104,11 +104,11 @@ function ui_settingsDialog(exportInfo) {
 				grpLeft: Group { \
 					alignment: 'left', \
 					btnHelp: Button { text: '"+ escapeString(strButtonHelp) +"',  alignment: 'left' }, \
-					btnConfig: Button { text: '"+ escapeString(strButtonCreateConfig) +"',  alignment: 'left' }, \
 				}, \
 				grpRight: Group { \
 					alignment: 'right', \
 					btnRun: Button { text: '"+ escapeString(strButtonRun) +"', alignment: 'right', properties: { name:'ok' } }, \
+					btnSave: Button { text: '"+ escapeString(strButtonSave) +"', alignment: 'right' }, \
 					btnCancel: Button { text: '"+ escapeString(strButtonCancel) +"', alignment: 'right', properties: { name:'cancel' } }, \
 				}, \
 			}, \
@@ -146,9 +146,9 @@ function ui_settingsDialog(exportInfo) {
 	// Buttuns Events
 	dlgMain.grpDestination.btnBrowse.onClick        = onBrowseButtonPress;
 	dlgMain.grpButtons.grpRight.btnRun.onClick      = onRunButtonPress;
+	dlgMain.grpButtons.grpRight.btnSave.onClick     = onSaveButtonPress;
 	dlgMain.grpButtons.grpRight.btnCancel.onClick   = onCancelButtonPress;
 	dlgMain.grpButtons.grpLeft.btnHelp.onClick      = onHelpButtonPress;
-	dlgMain.grpButtons.grpLeft.btnConfig.onClick    = onConfigButtonPress;
 
 	// Open Window
 	app.bringToFront();
@@ -217,14 +217,38 @@ function onFileTypeChange (){
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function: onRunButtonPress
-// Usage: run on run button press
+// Usage: run on Run button press
 // Input: void
 // Return: void
 ///////////////////////////////////////////////////////////////////////////////
 function onRunButtonPress() {
+	if (!validateSettings()) return;
+	dlgMain.close(runButtonID);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Function: onSaveButtonPress
+// Usage: run on Save button press
+// Input: void
+// Return: void
+///////////////////////////////////////////////////////////////////////////////
+function onSaveButtonPress() {
+	if (!validateSettings()) return;
+	dlgMain.close(saveButtonID);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Function: validateSettings
+// Usage: Execute before saving settings or running the exporter
+// Input: void
+// Return: void
+///////////////////////////////////////////////////////////////////////////////
+function validateSettings(){
 
 	// Destination Specified?
-	var destination = dlgMain.grpDesination.field.text;
+	var destination = dlgMain.grpDestination.field.text;
 	if (destination.length == 0) {
 		alert(strAlertSpecifyDestination);
 		return;
@@ -237,8 +261,7 @@ function onRunButtonPress() {
 		return;
 	}
 
-	// Everything is ok, GO GO GO!
-	dlgMain.close(runButtonID);
+	return true;
 }
 
 

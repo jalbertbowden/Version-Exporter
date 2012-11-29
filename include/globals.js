@@ -72,10 +72,12 @@ var compJPEGIndex                       = 3;
 // ok and cancel button
 var runButtonID                         = 1;
 var cancelButtonID                      = 2;
+var saveButtonID                        = 3;
 
 // UI strings to be localized
 var strTitle                            = "Versions Exporter v."+VERSION;
 var strButtonRun                        = "Run"
+var strButtonSave                       = "Save"
 var strButtonCancel                     = "Cancel"
 var strButtonHelp                       = "Documentation"
 var strButtonCreateConfig				= "Create Project Configuration"
