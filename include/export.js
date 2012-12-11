@@ -101,7 +101,10 @@ function saveFile( fileNameBody ) {
 			saveFile = new File(exportInfo.destination + "/" + fileNameBody + ".tif");
 			tiffSaveOptions = new TiffSaveOptions();
 			tiffSaveOptions.embedColorProfile = exportInfo.icc;
-			tiffSaveOptions.imageCompression = exportInfo.tiffCompression;
+			tiffSaveOptions.imageCompression = TIFFEncoding.TIFFZIP;
+			// tiffSaveOptions.imageCompression = TIFFEncoding.NONE;
+			tiffSaveOptions.transparency = true;
+			tiffSaveOptions.layers = false;
 			if (TIFFEncoding.JPEG == exportInfo.tiffCompression) {
 				tiffSaveOptions.jpegQuality = exportInfo.tiffJpegQuality;
 			}
