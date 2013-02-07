@@ -179,7 +179,7 @@ function main_init(exportInfo) {
 	// Initialize default parameters
     exportInfo.destination                  = new String("");
     exportInfo.fileNamePrefix               = new String("untitled");
-    exportInfo.operationMode                = 0;
+    exportInfo.operationMode                = 2;
     exportInfo.exportSelected               = false;
     exportInfo.fileType                     = 0;
     exportInfo.icc                          = false;
