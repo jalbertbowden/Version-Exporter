@@ -33,9 +33,9 @@ function ui_settingsDialog(exportInfo) {
 				field: EditText { text: '"+ escapeString(exportInfo.destination) +"', preferredSize: [ 300, 21 ] }, \
 				btnBrowse: Button { text: '"+ escapeString(strButtonBrowse) +"', preferredSize: [ 80, 23 ] } \
 			}, \
-			grpFilenamePrefix: Group { \
-				label: StaticText { text: '"+ strLabelFileNamePrefix +"', preferredSize: [ 140, 15 ] }, \
-				field: EditText { text: '"+ escapeString(exportInfo.fileNamePrefix) +"', preferredSize: [ 390, 21 ] }, \
+			grpFilenameTemplate: Group { \
+				label: StaticText { text: '"+ strLabelFilenameTemplate +"', preferredSize: [ 140, 15 ] }, \
+				field: EditText { text: '"+ escapeString(exportInfo.filenameTemplate) +"', preferredSize: [ 390, 21 ] }, \
 			}, \
 			grpOperationMode: Group { \
 				label: StaticText { text: '"+ strLabelMode +"', preferredSize: [ 140, 15 ] }, \
@@ -164,7 +164,7 @@ function ui_settingsDialog(exportInfo) {
 
 	// Get settings from dialog
     exportInfo.destination                  = dlgMain.grpDestination.field.text;
-    exportInfo.fileNamePrefix               = dlgMain.grpFilenamePrefix.field.text;
+    exportInfo.filenameTemplate             = dlgMain.grpFilenameTemplate.field.text;
     exportInfo.operationMode                = operationModesOrder[dlgMain.grpOperationMode.field.selection.index];
     exportInfo.exportSelected               = dlgMain.grpOptions.fieldExportSelected.value;
     exportInfo.trim                         = dlgMain.grpOptions.fieldTrim.value;

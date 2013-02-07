@@ -23,7 +23,7 @@ var SCRIPT_REGISTRY_ID                  = "yasoNEijdaP74gRLAeNpUiTr6m"
 var INSTRUCTIONS_SPLIT_TOKEN            = "### VERSION EXPORTER DATA ###";
 var XML_SETTINGS_NAME                   = "VersionExporterSettings";
 var HOME                                = "~/Pro Actions";
-var VERSION								= "1.1";
+var VERSION								= "1.2";
 
 // logging
 var LOG_FILE                            = HOME + '/Version Exporter/Logs/{document}_%Y-%m-%d_%H-%M-%S.log' // {document}, {loglevel}, +strftime
@@ -86,6 +86,7 @@ var strHelpText                         = "Please specify the format and locatio
 var strLabelDestination                 = "Destination:"
 var strButtonBrowse                     = "&Browse..."
 var strLabelFileNamePrefix              = "Filename Prefix:"
+var strLabelFilenameTemplate            = "Filename Template:"
 var strCheckboxVisibleOnly              = "&Visible Layers Only"
 var strLabelFileType                    = "File Type:"
 var strCheckboxIncludeICCProfile        = "&Include ICC Profile"

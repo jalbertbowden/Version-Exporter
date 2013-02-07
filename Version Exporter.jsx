@@ -178,7 +178,8 @@ function main_init(exportInfo) {
 
 	// Initialize default parameters
     exportInfo.destination                  = new String("");
-    exportInfo.fileNamePrefix               = new String("untitled");
+    exportInfo.fileNamePrefix               = new String("");
+    exportInfo.filenameTemplate             = new String("{document}_{####}_{name}");
     exportInfo.operationMode                = 2;
     exportInfo.exportSelected               = false;
     exportInfo.fileType                     = 0;
@@ -256,8 +257,18 @@ function main_init(exportInfo) {
 		// Copy document config to exportInfo
 		MergeObjectsRecursive(exportInfo, documentConfig);
 
-
 	}
+
+	// Check the settings
+
+	// Check if the obsolete field prefix is used
+	try {
+		var prefix = String(exportInfo.fileNamePrefix);
+		if (prefix.length) {
+			exportInfo.filenameTemplate = exportInfo.filenameTemplate.replace("{document}", prefix);
+			exportInfo.fileNamePrefix = "";
+		}
+	} catch(e){}
 
 	// Disable export selected for batch operations
 	if ( app.playbackDisplayDialogs == DialogModes.NO ) {

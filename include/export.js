@@ -23,21 +23,30 @@ var versionNumber = 0;
 ///////////////////////////////////////////////////////////////////////////////
 function export_version( versionName ){
 
+	versionName = String(versionName).trim();
+
 	// Determine the filename
-	var fileNameBody = "";
-	if (exportInfo.fileNamePrefix) fileNameBody += exportInfo.fileNamePrefix;
-	if (versionName) fileNameBody += "_" + zeroSuppress(versionNumber, 4) + "_" + String(versionName).trim();
+	var filename = exportInfo.filenameTemplate;
+	filename = filename.replace("{document}", docName);
+	filename = filename.replace("{name}", versionName);
+
+	// Replacing the numbers
+	while ( match = /\{(#+)\}/g.exec(filename) ) {
+		var digits = match[1].split('').length;
+		var number = zeroSuppress(versionNumber, digits);
+		filename = filename.replace('{'+match[1]+'}', number)
+	}
 
 	// No prefix and no versionName, user the original document title without extension
-	if (!fileNameBody) fileNameBody = docName.replace(/\.[^\.]+$/, "");
+	if (!filename) filename = docName.replace(/\.[^\.]+$/, "");
 
-	fileNameBody = fileNameBody.replace(/[:\/\\*\?\"\<\>\|]/g, "_");  // '/\:*?"<>|' -> '_'
-	fileNameBody = fileNameBody.replace(/_+/g, "_");  // '____' -> '_'
-	fileNameBody = fileNameBody.replace(/\-+/g, "-");  // '---' -> '-'
-	fileNameBody = fileNameBody.substring(0,120);
+	filename = filename.replace(/[:\/\\*\?\"\<\>\|]/g, "_");  // '/\:*?"<>|' -> '_'
+	filename = filename.replace(/_+/g, "_");  // '____' -> '_'
+	filename = filename.replace(/\-+/g, "-");  // '---' -> '-'
+	filename = filename.substring(0,120);
 
 	// Save the file
-	var savedFile = saveFile(fileNameBody);
+	var savedFile = saveFile(filename);
 
 	if (exportInfo.Wrapper.mode) {
 		try {
