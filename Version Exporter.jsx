@@ -194,12 +194,12 @@ function main_init(exportInfo) {
 	// Set default destination and filename prefix
 	try {
 		exportInfo.destination = Folder(app.activeDocument.fullName.parent).fsName; // destination folder
-		var tmp = app.activeDocument.fullName.name;
-		exportInfo.fileNamePrefix = decodeURI(tmp.substring(0, tmp.indexOf("."))); // filename body part
+		// var tmp = app.activeDocument.fullName.name;
+		// exportInfo.fileNamePrefix = decodeURI(tmp.substring(0, tmp.indexOf("."))); // filename body part
 	} catch(e) {
 		Log.notice(e);
 		exportInfo.destination = new String("");
-		exportInfo.fileNamePrefix = app.activeDocument.name; // filename body part
+		// exportInfo.fileNamePrefix = app.activeDocument.name; // filename body part
 	}
 
 	// Get settings from XMP

@@ -27,7 +27,7 @@ function export_version( versionName ){
 
 	// Determine the filename
 	var filename = exportInfo.filenameTemplate;
-	filename = filename.replace("{document}", docName);
+	filename = filename.replace("{document}", docName.substring(0, docName.indexOf(".")));
 	filename = filename.replace("{name}", versionName);
 
 	// Replacing the numbers
