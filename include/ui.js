@@ -35,7 +35,12 @@ function ui_settingsDialog(exportInfo) {
 			}, \
 			grpFilenameTemplate: Group { \
 				label: StaticText { text: '"+ strLabelFilenameTemplate +"', preferredSize: [ 140, 15 ] }, \
-				field: EditText { text: '"+ escapeString(exportInfo.filenameTemplate) +"', preferredSize: [ 390, 21 ] }, \
+				field: EditText { text: '"+ escapeString(exportInfo.filenameTemplate) +"', preferredSize: [ 300, 21 ] }, \
+				btnHelp: Button { text: '"+ escapeString(strButtonHelp) +"', preferredSize: [ 80, 23 ] } \
+			}, \
+			grpFilenamePreview: Group { \
+				label: StaticText { text: '"+ strLabelFilenamePreview +"', preferredSize: [ 140, 15 ] }, \
+				field: StaticText { text: 'qwe asdf asdf asdf asd', preferredSize: [ 390, 15 ] }, \
 			}, \
 			grpOperationMode: Group { \
 				label: StaticText { text: '"+ strLabelMode +"', preferredSize: [ 140, 15 ] }, \
@@ -103,7 +108,7 @@ function ui_settingsDialog(exportInfo) {
 				alignment: 'fill', \
 				grpLeft: Group { \
 					alignment: 'left', \
-					btnHelp: Button { text: '"+ escapeString(strButtonHelp) +"',  alignment: 'left' }, \
+					btnDocumentation: Button { text: '"+ escapeString(strButtonDocumentation) +"',  alignment: 'left' }, \
 				}, \
 				grpRight: Group { \
 					alignment: 'right', \
@@ -143,12 +148,17 @@ function ui_settingsDialog(exportInfo) {
 	FileTypeDropDown.onChange = onFileTypeChange;
 	onFileTypeChange();
 
+	// Update filename template preview
+	dlgMain.grpFilenameTemplate.field.onChanging          = onFilenameTemplateChange;
+	onFilenameTemplateChange();
+
 	// Buttuns Events
-	dlgMain.grpDestination.btnBrowse.onClick        = onBrowseButtonPress;
-	dlgMain.grpButtons.grpRight.btnRun.onClick      = onRunButtonPress;
-	dlgMain.grpButtons.grpRight.btnSave.onClick     = onSaveButtonPress;
-	dlgMain.grpButtons.grpRight.btnCancel.onClick   = onCancelButtonPress;
-	dlgMain.grpButtons.grpLeft.btnHelp.onClick      = onHelpButtonPress;
+	dlgMain.grpFilenameTemplate.btnHelp.onClick           = onHelpButtonPress;
+	dlgMain.grpDestination.btnBrowse.onClick              = onBrowseButtonPress;
+	dlgMain.grpButtons.grpRight.btnRun.onClick            = onRunButtonPress;
+	dlgMain.grpButtons.grpRight.btnSave.onClick           = onSaveButtonPress;
+	dlgMain.grpButtons.grpRight.btnCancel.onClick         = onCancelButtonPress;
+	dlgMain.grpButtons.grpLeft.btnDocumentation.onClick   = onDocumentationButtonPress;
 
 	// Open Window
 	app.bringToFront();
@@ -214,6 +224,17 @@ function onFileTypeChange (){
 
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Function: onRunButtonPress
+// Usage: run on Run button press
+// Input: void
+// Return: void
+///////////////////////////////////////////////////////////////////////////////
+function onFilenameTemplateChange() {
+	var template = dlgMain.grpFilenameTemplate.field.text;
+	var filename = processFilenameTemplate(template, 'version');
+	dlgMain.grpFilenamePreview.field.text = filename;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function: onRunButtonPress
@@ -275,14 +296,23 @@ function  onCancelButtonPress(){
 	dlgMain.close(cancelButtonID);
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Function: onHelpButtonPress
-// Usage: open help
+// Usage: open help for filename template
 // Input: void
 // Return: void
 ///////////////////////////////////////////////////////////////////////////////
 function onHelpButtonPress(){
+	alert(strHelp);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Function: onDocumentationButtonPress
+// Usage: open documentation
+// Input: void
+// Return: void
+///////////////////////////////////////////////////////////////////////////////
+function onDocumentationButtonPress(){
 	var path = Stdlib.getScriptFolder() + '/../docs';
 	var docsFolder = new Folder(path);
 	docsFolder.execute();
