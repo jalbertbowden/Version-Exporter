@@ -77,7 +77,7 @@ var saveButtonID                        = 3;
 // UI strings to be localized
 var strTitle                            = "Versions Exporter v."+VERSION;
 var strButtonRun                        = "Run"
-var strButtonSave                       = "Save"
+var strButtonSave                       = "Save Settings"
 var strButtonCancel                     = "Cancel"
 var strButtonDocumentation               = "Documentation"
 var strButtonCreateConfig				= "Create Project Configuration"
@@ -127,7 +127,7 @@ var strPNGOptions                       = "PNG Options:"
 
 var strLabelMode  			            = "Operation Mode";
 var strLabelExportSelected              = "Export Selected";
-var strLabelTrim                        = "Trim Transparency";
+var strLabelTrim                        = "Trim Transparency (flattens layers)";
 var strCheckboxSafariWrap               = "Make Safari Screenshot";
 var strEnable                           = "Enable";
 var strSafariWrap                       = "Safari Wrap";

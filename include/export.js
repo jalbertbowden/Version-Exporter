@@ -1,6 +1,6 @@
 ﻿/**
  * ------------------------------------------------------------
- * Copyright (c) 2011 Artem Matevosyan
+ * Copyright (c) 2013 Artem Matevosyan
  * ------------------------------------------------------------
  *
  * @version $Revision: 202 $:
@@ -27,6 +27,8 @@ function export_version( versionName ){
 	filenameTemplate = exportInfo.filenameTemplate;
 	var filename = processFilenameTemplate(filenameTemplate, versionName);
 
+	export_prepare();
+
 	// Save the file
 	var savedFile = saveFile(filename);
 
@@ -50,6 +52,30 @@ function export_version( versionName ){
 
 	// Increase version number
 	versionNumber++;
+}
+
+
+function export_prepare(){
+
+	// Remove hidden layers for PSD
+	try {
+		var selectedFileType = fileTypes[exportInfo.fileType];
+		if ( selectedFileType == 'PSD' && docRef.layers.length > 1 ) {
+			Stdlib.deleteAllHiddenLayers(docRef);
+		}
+	} catch(e) {
+		Log.error('export_prepare: Could not remove hidden layers for PSD', e);
+	}
+
+	// Trim document
+	try {
+		if (exportInfo.trim) {
+			trimmer(docRef);
+		}
+	} catch(e) {
+		Log.error('export_prepare: Could not trim the document', e);
+	}
+
 }
 
 

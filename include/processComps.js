@@ -67,13 +67,6 @@ function processComps() {
 			}
 		}
 
-		// Trim document
-		try {
-			if (exportInfo.trim) {
-				trimmer(docRef);
-			}
-		} catch(e) {}
-
 		// Export version
 		export_version(currentComp.name);
 
@@ -103,7 +96,7 @@ function processComps() {
 
 			// Faltten Image
 			case "mergeVisible":
-				//docRef.flatten();
+				Stdlib.mergeVisible(docRef);
 				break;
 
 			// Crop

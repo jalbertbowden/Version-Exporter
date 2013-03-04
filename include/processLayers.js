@@ -318,34 +318,6 @@ function processBackground(){
 	// Check if there is a Background LayerSet
 	try {
 
-		// DEPRECATED
-		// Accessing the names of the layers sets takes too long, so we don't use it anymore
-
-		// There might be several layerSets named "Background"
-
-		// Option 1
-		// var backgroundsLayers = Stdlib.getAllByName(docRef.layerSets, BACKGROUNDLAYERSETNAME);
-
-		// Option 2 (simplified)
-		// var backgroundsLayers = [];
-		// for (var i = 0; i < docRef.layerSets.length; i++) {
-		// 	alert(docRef.layerSets[i].name)
-		// 	if (docRef.layerSets[i].name == BACKGROUNDLAYERSETNAME) {
-		// 		backgroundsLayers.push(docRef.layerSets[i]);
-		// 	}
-		// }
-
-		// Rename all the layers, except for the last one
-		// for  (var i = 0; i < (backgroundsLayers.length - 1); i++ ) {
-		// 	backgroundsLayers[i].name = BACKGROUNDLAYERSETNAME + ' ' + (i + 1);
-		// }
-
-		// // set the global reference to the last background layerSet
-		// backgroundLayerSet = backgroundsLayers[backgroundsLayers.length - 1];
-
-		// // move it to the very bottom
-		// backgroundLayerSet.move( docRef.layerSets[docRef.layerSets.length - 1], ElementPlacement.PLACEAFTER );
-
 		var lastLayerSet = docRef.layerSets[docRef.layerSets.length - 1];
 		if (lastLayerSet.name == BACKGROUNDLAYERSETNAME) {
 			backgroundLayerSet = lastLayerSet;
@@ -397,4 +369,4 @@ function setActiveLayerColor( color ) {
 	desc2.putEnumerated( charIDToTypeID('Clr '), charIDToTypeID('Clr '), charIDToTypeID(color) );
 	desc.putObject( charIDToTypeID('T   '), charIDToTypeID('Lyr '), desc2 );
 	executeAction( charIDToTypeID('setd'), desc, DialogModes.NO );
-};
+}

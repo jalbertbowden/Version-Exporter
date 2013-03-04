@@ -1,6 +1,6 @@
 ﻿/**
  * ------------------------------------------------------------
- * Copyright (c) 2012 Artem Matevosyan
+ * Copyright (c) 2011 Artem Matevosyan
  * ------------------------------------------------------------
  *
  * @version $Revision: 216 $:
@@ -24,13 +24,6 @@ function processPlain() {
 
 	// Work with duplicate
 	docRef = origDocRef.duplicate();
-
-	// Trim document
-	try {
-		if (exportInfo.trim) {
-			trimmer(docRef);
-		}
-	} catch(e) {}
 
 	// Export version
 	export_version("");
