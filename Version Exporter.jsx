@@ -2,10 +2,6 @@
  * ------------------------------------------------------------
  * Copyright (c) 2011 Artem Matevosyan
  * ------------------------------------------------------------
- *
- * @version $Revision: 205 $:
- * @author  $Author: mart $:
- * @date    $Date: 2012-05-08 10:44:03 +0200 (Di, 08 Mai 2012) $:
  */
 
 #target photoshop
@@ -177,7 +173,7 @@ function main_init(exportInfo) {
 	Log.notice('Initializing export configuration');
 
 	// Initialize default parameters
-    exportInfo.destination                  = new String("");
+    exportInfo.destination                  = new String(Folder.desktop);
     exportInfo.fileNamePrefix               = new String("");
     exportInfo.filenameTemplate             = new String("{document}_{####}_{name}");
     exportInfo.operationMode                = 2;
@@ -191,15 +187,11 @@ function main_init(exportInfo) {
     exportInfo.Wrapper.windowURL            = 'http://www.website.com';
     exportInfo.Wrapper.backgroundColor      = '#444444'
 
-	// Set default destination and filename prefix
+	// Set default destination to document location if document is saved
 	try {
-		exportInfo.destination = Folder(app.activeDocument.fullName.parent).fsName; // destination folder
-		// var tmp = app.activeDocument.fullName.name;
-		// exportInfo.fileNamePrefix = decodeURI(tmp.substring(0, tmp.indexOf("."))); // filename body part
+		exportInfo.destination = Folder(app.activeDocument.fullName.parent).fsName;
 	} catch(e) {
 		Log.notice(e);
-		exportInfo.destination = new String("");
-		// exportInfo.fileNamePrefix = app.activeDocument.name; // filename body part
 	}
 
 	// Get settings from XMP
@@ -223,7 +215,6 @@ function main_init(exportInfo) {
 
 	if ( savedSettingsString != "undefined" && savedSettingsString != "" ) {
 		Log.notice('Got settings saved in : ' + savedSettingsString);
-
 		savedSettings = eval('(' + savedSettingsString + ')');
 		MergeObjectsRecursive(exportInfo, savedSettings);
 	}

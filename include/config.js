@@ -2,10 +2,6 @@
  * ------------------------------------------------------------
  * Copyright (c) 2011 Artem Matevosyan
  * ------------------------------------------------------------
- *
- * @version $Revision: 212 $:
- * @author  $Author: mart $:
- * @date    $Date: 2012-05-16 16:48:36 +0200 (Mi, 16 Mai 2012) $:
  */
 
 
@@ -16,13 +12,20 @@
 
 function config_getCurrentDocConfig(doc){
 
-	var documentConfig = null;
+	var documentConfig = null,
+		docPath = '';
+
+	try {
+		// Folder containing current document
+		docPath = doc.path;
+	} catch(e){
+		// Probably the document was not saved yet, nothing to do here
+		return;
+	}
 
 	try {
 
-		// Only for saved documents
-		if (!doc.path) return;
-		var documentLocation = Url.getAbsolute(doc.path);
+		var documentLocation = Url.getAbsolute(docPath);
 
 		// 1. Look in the folder near the document
 		configFilePath = documentLocation + '/Project.conf';
