@@ -7,3 +7,6 @@ Version Exporter is a JavaScript application for Adobe Photoshop with general pu
 
 [Documentation and Screenshots](https://github.com/amtvsn/Version-Exporter/blob/master/docs/Documentation/Manual.md)
 
+## License
+
+[MIT](http://opensource.org/licenses/MIT)

@@ -1,78 +1,51 @@
-Version Exporter Documentation
-==============================
+Version Exporter
+================
 
-Version Exporter is a JavaScript application for Adobe Photoshop with general purpose to provide a workflow for exporting different views or versions of a single Photoshop document.
-
-It is an advanced version of familiar 'Layers to Files' and 'Comps to Files' scripts from the original Photoshop package.
+Version Exporter is a JavaScript application for Adobe Photoshop providing a workflow for exporting different views or versions of a single Photoshop document. It is an advanced version of familiar 'Layers to Files' and 'Comps to Files' scripts from the original Photoshop package.
 
 ![Main Window](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Main%20Window.png)
 
-Real Life Example
------------------
-
-First let's take a real life example without Version Exporter. Say, you design a website and you want to show a dropdown in the main navigation on a separate screen, as otherwise it covers the important content on the page. So you design the website and put the layers in some folders and here is what your document structure would normally look like.
-
-- Menu Dropdown
-- Menu
-- Content
-- Background
-
-What do you do now?
-
-Manual Approach
----------------
-
-1. You turn off (hide) the Menu Dropdown folder.
-2. Press "Save As" or "Save for Web" key shortcut.
-3. Choose the destination and filename, omitting that you need to think what is the current screen, figure out how to call or describe it.
-4. Multiply this by the number of screens and by the number of editions.
-
-Version Exporter Approach
--------------------------
-
-You may create a couple Layer Comps — one for the default screen view, and one for the view with the dropdown.
-
-*or*
-
-You keep the *overlays* and the basis common for all versions in different layer sets (or folders).
-
-In both cases that the workflow looks like follows:
-
-1. Press a hot key to call the action, press Run
-2. Done.
-
-There are several features that make Version Exporter irreplaceable must-have tool for every designer.
-
 Features
---------
+========
 
-- Saves and names images automatically
-- Allows to export to several images formats
-- Wraps screens in Safari window completely adjustable including transparent background and window shadow
-- Manages different dimensions for each version of a single document
-- Allows to setup settings for large multi-document projects
-- Remembers settings for each particular document
+- Automatic export of different states of the document based on layer sets or layer comps
+- Different formats
+- Automatic wrapping with Safari or Firefox windows
+- Different width and height for each exported image document
+- Shared settings to setup large multi-document projects
+- Settings are stored inside the PSD
 
 
 Installation
 ============
 
-Place the Version Exporter folder anywhere you want in the system.
+1. [Download zip form github](https://github.com/amtvsn/Version-Exporter/archive/master.zip)
+2. Unzip to a folder of your choice
+3. You may now run `Version Exporter.jsx` script by selecting `File → Scripts → Browse…` and then navigating to the unzipped folder. But this is to slow to leave it this way.
+4. You may record an Action and set a function hotkey to run it (something like `Ctrl + Shift + F10`). I would suggest to add Version Exporter to the `File → Scripts` menu
 
+## Add Version Exporter to the Scripts menu
 
-Running Version Exporter
-========================
+### On Mac
+1. Open Terminal
+2. Type `ln -s`
+3. Press space
+4. Drag the `Version Exporter.jsx` from the unzipped folder file onto the Terminal window
+5. Press space 
+6. Navigate to Photoshop Presets folder. By default it is `/Applications/Adobe Photoshop CS6/Presets`. It dosn't need to be CS6, can be also CS4 or CS5.
+7. Drag the `Scripts` folder from the `Presets` folder onto the Terminal window.
+8. Press Return
+9. Restart Photoshop
 
-To run Version Exporter
+### On Windows 7 (didn't test on other systems)
+1. Navigate to your Photoshop Scrips folder. By Default it is `C:\Program Files\Adobe\Adobe Photoshop CS4 (64 Bit)\Presets\Scripts`. Depends on what version of Photoshop you're using.
+2. Create a regular shortcut to the `Version Exporter.jsx` file from the unzipped folder
+3. Restart Photoshop
 
-1. Open Photoshop
-2. Click `File → Scripts → Browse…`
-3. Navigate to the folder where you have installed Version Exporter
-4. Choose `Version Exporter.jsx`
+### Set a hotkey
+Set a hotkey by selecting `Edit → Keyboard Shortcuts`. In that dialog window navigate to `File → Scripts → Version Exporter` and set a hotkey of your choice. I use `Ctrl + Alt + Cmd + V` on Mac.
 
-You might also want to record an action for that and provide it with a shortcut key for a fast access.
-
-Document Setu based on Layer Comps *(draft)*
+Document Setup based on Layer Comps *(draft)*
 ====================================
 
 _Still needs to be documented_
@@ -85,7 +58,11 @@ Version Exporter works in a copy of the document, so there is no way it can infl
 
 Excluding Comps
 --------------------
-_Not implemented yet_
+
+There are two option you may use. Add `#` or `~` to the beginning of the layer comp name to prevent it from being exported. The difference makes the numbering of the versions.
+
+Say you have 5 layer comps and the 3^d is to be excluded. So you add the `#` to the name of your layer comp and now it says something like `#Print` instead of just `Print`. In this case the version numbers will go `0, 1, 3, 4`. If you replace the `#` with `~`, the numbering will be `0, 1, 2, 3`
+
 
 Actions *(draft)*
 -----------------
@@ -108,15 +85,15 @@ All 4 parameters may have value `w` or `h` which are the place holders for the w
 
 	@crop 0,0,w,1000
 
-You may also crop by a certain area. Create a layer, give it any name, say, `Crop Layer`, and fill some area with color. Now give a comp the following comment:
+You may also crop by a certain area. Create a layer, give it any name, say, `Crop Viewport`, and fill some area with color. Now give a comp the following comment:
 
-	@crop area Crop Area
+	@crop area Crop Viewport
 
-This action will crop everything inside the bounding box of the `Crop Layer`. The visibility of the layer doesn't matter. It may even reside in nested layer sets. In this case just use the URL style path:
+This action will crop everything inside the bounding box of the `Cover`. The visibility of the layer doesn't matter. It may even reside in a nested layer set. In this case just use the URL style path:
 
-	@crop area Service/Crops/Crop Viewport
+	@crop area Settings/Crops/Crop Viewport
 
-Where `Service` is a name of the layer set, `Crops` is a layerset inside `Service` and `Crop Viewport` is an actual layer with filled area:
+Where `Service` is a name of the layer set, `Crops` is a layer set inside `Settings` and `Crop Viewport` is an actual layer with filled area:
 
 ![Layer Comps Actions](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Comps%20Actions.png)
 
@@ -529,6 +506,7 @@ Tested on:
 - Mac, Intel Core i5 @ 3.2GHz, 4GB, Adobe Photoshop CS4
 - Mac, Intel Core i5 @ 3.2GHz, 12GB, Adobe Photoshop CS4
 - Mac, Intel Core i5 @ 3.2GHz, 12GB, Adobe Photoshop CS5
+- Mac, Intel Core i5 @ 3.2GHz, 12GB, Adobe Photoshop CS6
 - Mac, Intel Core 2 Duo @ 2.4GHz, 4GB, Adobe Photoshop CS4
 - Mac, Intel Core 2 Duo @ 2.4GHz, 8GB, Adobe Photoshop CS4
 
