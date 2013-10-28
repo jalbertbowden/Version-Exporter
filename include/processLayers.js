@@ -240,8 +240,15 @@ function processSmartLayerSet( layerSet ) {
 					}
 				}
 
-				// Do crop
-				//docRef.flatten();
+				// We add a new layer to make it selected
+				// Because if the selection will be on an invisible layer
+				// the merge visible function will be unavailable
+				docRef.artLayers.add();
+				Stdlib.mergeVisible(docRef);
+				// Delete hidden layers to make crop work faster
+				Stdlib.deleteAllHiddenLayers(docRef);
+
+				// crop
 				Stdlib.cropBounds(docRef, bounds);
 				break;
 

@@ -262,9 +262,10 @@ function main_init(exportInfo) {
 	} catch(e){}
 
 	// Disable export selected for batch operations
-	if ( app.playbackDisplayDialogs == DialogModes.NO ) {
-		exportInfo.exportSelected = false;
-	}
+	// Later: Commented this feaure out
+	// if ( app.playbackDisplayDialogs == DialogModes.NO ) {
+	// 	 exportInfo.exportSelected = false;
+	// }
 
 	Log.notice('Finished initializing settings');
 

@@ -139,6 +139,8 @@ function processComps() {
 				// the merge visible function will be unavailable
 				docRef.artLayers.add();
 				Stdlib.mergeVisible(docRef);
+				// Delete hidden layers to make crop work faster
+				Stdlib.deleteAllHiddenLayers(docRef);
 
 				// crop
 				Stdlib.cropBounds(docRef, bounds);
