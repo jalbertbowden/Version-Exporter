@@ -44,24 +44,31 @@ function processComps() {
 	for (var i = 0; i < compsNumber; i++ ){
 
 		var currentComp = comps[i];
+		Log.notice('Current comp: ' + currentComp);
 
-		// Skipping if the name starts with ~ or #
-		if ( String(currentComp.name).startsWith('~') ) continue;
+		// Skipping if the name starts with ~
+		if ( String(currentComp.name).startsWith('~') ) {
+			Log.notice('Skipping comp without number increase');
+			continue;
+		}
 
 		// Skip the comp, but count it
 		if ( String(currentComp.name).startsWith('#') ) {
+			Log.notice('Skipping comp and increasing the number');
 			versionNumber++;
 			continue;
 		}
 
 		// Selected only
 		if (exportInfo.exportSelected && !currentComp.selected) {
+			Log.notice('Skipping comp as it is not selected');
 			versionNumber++;
 			continue;
 		}
 
 		// Apply each comp
 		currentComp.apply();
+		Log.notice('Comp applied');
 
 		// Process commands
 		if (currentComp.comment) {
@@ -72,6 +79,8 @@ function processComps() {
 				line.startsWith('@') ? processCommand(line) : '';
 			}
 		}
+
+		Log.notice('Exporting the version');
 
 		// Export version
 		export_version(currentComp.name);
@@ -89,6 +98,8 @@ function processComps() {
 
 	function processCommand(command) {
 
+		Log.notice('Command found: ' + command);
+
 		command = String(command).substring(1); // cut off first "@" symbol
 		var action = command.split(/\s+/).shift();
 		var params = command.substring(action.length).trim();
@@ -97,16 +108,20 @@ function processComps() {
 
 			// Faltten Image
 			case "flatten":
+				Log.notice('Action recognized: ' + action);
 				docRef.flatten();
 				break;
 
 			// Faltten Image
 			case "mergeVisible":
+				Log.notice('Action recognized: ' + action);
 				Stdlib.mergeVisible(docRef);
 				break;
 
 			// Crop
 			case "crop":
+
+				Log.notice('Action recognized: ' + action);
 
 				// crop by layer
 				if (params.startsWith('area')) {
@@ -137,12 +152,23 @@ function processComps() {
 				// We add a new layer to make it selected
 				// Because if the selection will be on an invisible layer
 				// the merge visible function will be unavailable
+				Log.notice('Adding a layer');
 				docRef.artLayers.add();
+
+				// Merge visible
+				Log.notice('Merging visible');
 				Stdlib.mergeVisible(docRef);
+
 				// Delete hidden layers to make crop work faster
-				Stdlib.deleteAllHiddenLayers(docRef);
+				Log.notice('Deleting all hidden layers');
+				try {
+					Stdlib.deleteAllHiddenLayers(docRef);
+				} catch (e){
+					Log.warning('Could not delete hidden layers before cropping as there are still locked ones among them. Credits for this go to Adobe.')
+				}
 
 				// crop
+				Log.notice('Cropping with the bounds: ' + bounds);
 				Stdlib.cropBounds(docRef, bounds);
 				break;
 
