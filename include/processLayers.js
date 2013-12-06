@@ -221,6 +221,27 @@ function processSmartLayerSet( layerSet ) {
 				docRef.flatten();
 				break;
 
+			// Resize
+			case "resize":
+				Log.notice('Action recognized: ' + action);
+
+				var dimensions = params.split(",", 2); // expect 2 params: width and height
+
+				// Replace variables
+				for (var i = 0; i < dimensions.length; i++) {
+					var d = String(dimensions[i]).trim();
+					if (d == 'w') d = getUnitValue(docRef.width);
+					if (d == 'h') d = getUnitValue(docRef.height);
+					dimensions[i] = d;
+				}
+
+				var width = parseInt(dimensions[0]);
+				var height = parseInt(dimensions[1]);
+
+				Stdlib.resizeImage(docRef, width, height);
+
+				break;
+
 			// Crop
 			case "crop":
 

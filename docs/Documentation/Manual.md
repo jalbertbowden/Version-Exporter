@@ -31,7 +31,7 @@ Installation
 2. Type `ln -s`
 3. Press space
 4. Drag the `Version Exporter.jsx` from the unzipped folder file onto the Terminal window
-5. Press space 
+5. Press space
 6. Navigate to Photoshop Presets folder. By default it is `/Applications/Adobe Photoshop CS6/Presets`. It dosn't need to be CS6, can be also CS4 or CS5.
 7. Drag the `Scripts` folder from the `Presets` folder onto the Terminal window.
 8. Press Return
@@ -73,6 +73,8 @@ Having in mind that there might be quite a number of actions, I must say that no
 
 	@function params
 
+### Crop Action
+
 Syntax for the "crop" action is
 
 	@crop startX,startY,endX,endY
@@ -93,9 +95,45 @@ This action will crop everything inside the bounding box of the `Cover`. The vis
 
 	@crop area Settings/Crops/Crop Viewport
 
-Where `Service` is a name of the layer set, `Crops` is a layer set inside `Settings` and `Crop Viewport` is an actual layer with filled area:
+Where `Settings` is a name of the layer set, `Crops` is a layer set inside `Settings` and `Crop Viewport` is an actual layer with filled area:
 
 ![Layer Comps Actions](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Images/Comps%20Actions.png)
+
+### Resize Action
+
+Resize action will resize the document before saving a version while keeping the width and height ratio.
+
+Syntax:
+
+	@resize [width],[height]
+
+Example:
+
+	@resize 1920,1080
+
+You can use `w` and `h` placeholders just like in the `crop` action.
+
+	@resize 1920,h
+
+Height can be omitted.
+
+	@resize 1920
+
+Assuming you have a document 400px wide and 300px tall.
+
+	@resize 100
+
+Produces a document of the size 100x75.
+
+	@resize 500,h
+
+`h` will be replaced with `300` and as soon it is the smalles dimension the resulting document will remain of the initial size 400x300
+
+	@resize 500
+
+Produces a document of the size 500x375.
+
+See example document [Resize Action.psd](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Examples/Resize%20Action.psd)
 
 Document Setup based on Layer Sets
 ==================================
@@ -503,6 +541,8 @@ Mac or PC and Adobe Photoshop CS4 or higher.
 Tested on:
 
 - PC, Windows 7, Intel Core i5-2400 CPU @ 3.10GHz, 8 GB, Adobe Photoshop CS4
+- PC, Windows 7, Intel Core i5-2400 CPU @ 3.10GHz, 8 GB, Adobe Photoshop CS6
+- PC, Windows 7, Intel Core i5-2400 CPU @ 3.10GHz, 8 GB, Adobe Photoshop CC
 - Mac, Intel Core i5 @ 3.2GHz, 4GB, Adobe Photoshop CS4
 - Mac, Intel Core i5 @ 3.2GHz, 12GB, Adobe Photoshop CS4
 - Mac, Intel Core i5 @ 3.2GHz, 12GB, Adobe Photoshop CS5
