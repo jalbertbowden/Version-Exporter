@@ -15,6 +15,8 @@
 
 function SafariWrap () {
 
+	Log.notice('Safari Wrap: Invoked');
+
 	var dialogMode = DialogModes.NO;
 
 	// Get Window title and  URL
@@ -157,7 +159,7 @@ function SafariWrap () {
 	}
 
 	// Main Document Canvas Size
-	Stdlib.resizeCanvas(docRef, 120, 120, false, true);
+	Stdlib.resizeCanvas(docRef, 140, 140, false, true);
 
 	// Trim document
 	if (settings.trim) docRef.trim(TrimType.TOPLEFT);

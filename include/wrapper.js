@@ -22,9 +22,16 @@ function Wrapper ( docRef ) {
 	preferences.rulerUnits = Units.PIXELS;
 
 	// Process
-	switch (settings.mode) {
-		case 1: SafariWrap();	break;
-		case 2: FirefoxWrap();	break;
+	switch (String(settings.mode)) {
+		case "1":
+			SafariWrap();
+			break;
+		case "2":
+			FirefoxWrap();
+			break;
+		default:
+			Log.notice('Wrapper mode "'+settings.mode+'" was not recognized');
+			break;
 	}
 
 	// Restore Units
