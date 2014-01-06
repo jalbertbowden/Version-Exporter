@@ -91,7 +91,7 @@ function processFilenameTemplate(filenameTemplate, versionName){
 	var filename = filenameTemplate;
 
 	// Document Name
-	var documentName = docName.indexOf(".") > 0 ? docName.substring(0, docName.indexOf(".")) : docName;
+	var documentName = String(docName).replace(/\.[^\.]+$/, "");
 	filename = filename.replace("{document}", documentName);
 
 	// Version Name

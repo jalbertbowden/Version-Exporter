@@ -135,6 +135,12 @@ Produces a document of the size 500x375.
 
 See example document [Resize Action.psd](https://raw.github.com/amtvsn/Version-Exporter/master/docs/Documentation/Examples/Resize%20Action.psd)
 
+### Trim Action
+
+Trim transparancy for a particular version in case if the trimming is disabled in the options of export. No options available.
+
+	@trim
+
 Document Setup based on Layer Sets
 ==================================
 

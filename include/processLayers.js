@@ -221,6 +221,22 @@ function processSmartLayerSet( layerSet ) {
 				docRef.flatten();
 				break;
 
+			// Merge Visible
+			case "mergeVisible":
+				Log.notice('Action recognized: ' + action);
+				Stdlib.mergeVisible(docRef);
+				break;
+
+			// Trim Transparency
+			case "trim":
+				Log.notice('Action recognized: ' + action);
+				try {
+					trimmer(docRef);
+				} catch(e) {
+					Log.error('export_prepare: Could not trim the document', e);
+				}
+				break;
+
 			// Resize
 			case "resize":
 				Log.notice('Action recognized: ' + action);

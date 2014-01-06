@@ -136,8 +136,8 @@ function main_init(exportInfo) {
 	if ( documentConfig ) {
 
 		// Check if there is export configuration
-		if (!documentConfig.exportInfo) {
-			Log.notice("Configuration file does not contain \"exportInfo\" section, keeping defaults");
+		if (!documentConfig.exportInfo && !documentConfig.Wrapper) {
+			Log.notice("Configuration file contains neither \"exportInfo\", nor \"Wrapper\" section. Keeping defaults.");
 			return;
 		}
 
@@ -157,7 +157,6 @@ function main_init(exportInfo) {
 
 		// Copy document config to exportInfo
 		MergeObjectsRecursive(exportInfo, documentConfig);
-
 
 	}
 
