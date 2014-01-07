@@ -46,6 +46,9 @@ function processComps() {
 		var currentComp = comps[i];
 		Log.notice('Current comp: ' + currentComp);
 
+		// Override version format
+		overrideFormat = null;
+
 		// Skipping if the name starts with ~
 		if ( String(currentComp.name).startsWith('~') ) {
 			Log.notice('Skipping comp without number increase');
@@ -204,6 +207,19 @@ function processComps() {
 				// crop
 				Log.notice('Cropping with the bounds: ' + bounds);
 				Stdlib.cropBounds(docRef, bounds);
+				break;
+
+			// Override file format
+			case "format":
+				Log.notice('Action recognized: ' + action);
+				var format = String(params).toUpperCase();
+				Log.notice('Trying to set format: ' + format);
+				var fileTypeIndex = fileTypes.indexOf(format);
+				Log.notice('Format index: ' + fileTypeIndex);
+				if ( fileTypeIndex != -1 ) {
+					Log.notice('Setting format override to ' + fileTypeIndex);
+					overrideFormat = fileTypeIndex;
+				}
 				break;
 
 			// Unrecognized

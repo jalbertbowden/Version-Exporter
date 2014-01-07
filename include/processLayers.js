@@ -71,6 +71,9 @@ function processLayers() {
 		// Get layers set type (color)
 		var layerColor = getLayerColor(currentLayerSet);
 
+		// Override version format
+		overrideFormat = null;
+
 		switch (layerColor) {
 
 			// Disabled layerSet, skip it
@@ -287,6 +290,19 @@ function processSmartLayerSet( layerSet ) {
 
 				// crop
 				Stdlib.cropBounds(docRef, bounds);
+				break;
+
+			// Override file format
+			case "format":
+				Log.notice('Action recognized: ' + action);
+				var format = String(params).toUpperCase();
+				Log.notice('Trying to set format: ' + format);
+				var fileTypeIndex = fileTypes.indexOf(format);
+				Log.notice('Format index: ' + fileTypeIndex);
+				if ( fileTypeIndex != -1 ) {
+					Log.notice('Setting format override to ' + fileTypeIndex);
+					overrideFormat = fileTypeIndex;
+				}
 				break;
 
 			// Unrecognized

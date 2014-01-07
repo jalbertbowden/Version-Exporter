@@ -38,6 +38,7 @@ var backgroundLayerSet                  = null;
 var exportInfo                          = null;
 var documentConfig                      = null;
 var dlgMain                             = null;
+var overrideFormat                      = null;
 
 // the drop down list indexes for file type
 var bmpIndex                            = 0;

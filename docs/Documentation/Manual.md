@@ -141,6 +141,12 @@ Trim transparancy for a particular version in case if the trimming is disabled i
 
 	@trim
 
+### Format
+
+Change the file format of the particular version. Options are jpg, psd, png, tiff.
+
+	@format jpg
+
 Document Setup based on Layer Sets
 ==================================
 

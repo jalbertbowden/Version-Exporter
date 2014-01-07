@@ -128,9 +128,16 @@ function processFilenameTemplate(filenameTemplate, versionName){
 ///////////////////////////////////////////////////////////////////////////////
 function saveFile( fileNameBody ) {
 
-	var saveFile;
+	var saveFile,
+	    selectedFileType;
 
-	var selectedFileType = fileTypes[exportInfo.fileType];
+	// Format overridden by action
+	if (overrideFormat != null) {
+		selectedFileType = fileTypes[overrideFormat]
+	} else {
+		selectedFileType = fileTypes[exportInfo.fileType]
+	}
+
 	switch (selectedFileType) {
 		case 'JPG':
 			docRef.bitsPerChannel = BitsPerChannelType.EIGHT;
